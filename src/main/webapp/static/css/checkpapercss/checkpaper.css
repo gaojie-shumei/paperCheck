@@ -1,0 +1,91 @@
+
+#upPaperForm>div{
+	/* height:45px; */
+	width:100%;
+	margin-bottom: 25px;
+	
+}
+
+#upPaperForm label{
+	font-size: 16px;
+	font-weight: normal;
+	font-family: '宋体';
+	height: 45px;
+	line-height: 45px;
+} 
+#upPaperForm a{
+	float: left;
+	height:60px;
+	width:50%;
+	text-decoration: none;
+	text-align: center;
+	font-size: 13px;
+	line-height: 60px;
+	color: #000000;	
+}
+
+#upPaperForm #getpaperway{
+	height:60px;
+}
+
+input.form-control{
+	height:45px;
+}
+
+textarea.form-control{
+	height:200px;
+}
+
+.form-control[readonly]{
+    cursor:default;
+    background-color: #FFF;
+    opacity: 1;
+}
+
+#upPaperForm textarea{
+	margin-top: 8px;
+    border: 1px solid #e6e6e6;
+    color: #333;
+    padding: 15px;
+    line-height: 1.5;
+}
+
+textarea {
+    overflow: auto;
+    resize: none;
+}
+
+#upPaperForm .selected{
+	border-bottom: 3px solid #f60;
+    color: #f60;
+}
+
+#upPaperForm .file_upload_btn {
+    border: 1px solid #d8d8d8;
+    padding: 0 29px;
+    float: left;
+    font-size: 16px;
+    color: #505961;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -ms-border-radius: 2px;
+  /*   margin-right: 10px; */
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
+
+#upPaperForm .file_upload{
+     height: 50px;
+    text-align: center;
+    line-height: 50px;
+    opacity: 0;
+    cursor: pointer;
+  /*   margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0; */
+    position: absolute;
+    filter: alpha(opacity=0);
+}

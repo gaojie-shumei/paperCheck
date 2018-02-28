@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+    <mvc:annotation-driven />
+    <!-- ①：对web包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能,在spring配置文件中实现 -->
+   <context:component-scan base-package="com.csuweb.PaperCheck.web.controller" />
+
+<!--- StringHttpMessageConverter bean -->
+    <beans:bean id = "stringHttpMessageConverter" class = "org.springframework.http.converter.StringHttpMessageConverter"/>
+    <beans:bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+    <beans:bean id="formHttpMessageConverter" class="org.springframework.http.converter.FormHttpMessageConverter"/>
+    <beans:bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <beans:property name="supportedMediaTypes">
+            <beans:list>
+                <beans:value>application/json;charset=UTF-8</beans:value>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+    <!-- 这两个类用来启动基于Spring MVC的注解功能，将控制器与方法映射加入到容器中 -->
+    <beans:bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+    <beans:bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+    	<beans:property name="messageConverters">
+    		<beans:list>
+    			<beans:ref bean= "mappingJacksonHttpMessageConverter" />
+                 <!-- 新增的StringMessageConverter bean-->
+                 <beans:ref bean= "stringHttpMessageConverter" />
+                 <beans:ref bean= "jsonHttpMessageConverter" />         
+                 <beans:ref bean= "formHttpMessageConverter" />
+    		</beans:list>
+    	</beans:property>
+    </beans:bean>
+	
+    <!-- 这个类用于Spring MVC视图解析 -->
+    <beans:bean id="viewResolver"  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <beans:property name="prefix" value="/WEB-INF/view/" />
+        <beans:property name="suffix" value=".jsp" />
+    </beans:bean>
+    
+    <!-- 配置拦截器，可以直接定义拦截所有请求，也可以自定义拦截路径。 -->
+    <!-- <mvc:interceptors> -->
+    <!-- 直接定义拦截所有请求 -->
+    <!-- <bean class="com.wxisme.ssm.interceptor.IdentityInterceptor"></bean> -->
+        <!-- <mvc:interceptor>
+            拦截所有路径的请求   包括子路径
+            <mvc:mapping path="/**"/>
+            <bean class="com.wxisme.ssm.interceptor.IdentityInterceptor"></bean>
+        </mvc:interceptor> -->
+    <!-- </mvc:interceptors> -->
+    
+    <!--配置上传文件数据解析器  -->
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 1G -->
+        <beans:property name="maxUploadSize" value="1073741824" />
+        <beans:property name="defaultEncoding" value="UTF-8"></beans:property>
+    </beans:bean>
+
+	<!-- 开启shiro注解，使之可以在controller层使用  -->
+	<aop:config proxy-target-class="true"></aop:config>
+	<beans:bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<beans:property name="securityManager" ref="securityManager" />
+	</beans:bean>
+</beans:beans>

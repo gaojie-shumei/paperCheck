@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd ">     
+<html xmlns="http://www.w3.org/1999/xhtml ">     
+<head>
+<meta charset="UTF-8"></meta>
+<title>简明打印版</title>
+<style type="text/css">         
+body {     
+			font-family: SimSun;
+}     
+</style>
+</head>
+<body>
+<center><h1>写邦检测报告简明打印版</h1></center>
+<br ></br>
+<br ></br>
+<font style="font-weight: bold;">基本信息：</font>
+<br ></br>
+<br ></br>
+<font style="font-weight: bold">文档名称：${document.docTitle}</font>
+<br ></br>
+<font style="font-weight: bold">文档字数：${(document.norm.wordCount)}</font>
+<br ></br>
+<font style="font-weight: bold">提交人姓名：${document.submitterName}</font>
+<br ></br>
+<font style="font-weight: bold">检测范围：中国学术期刊数据库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国学位论文全文数据库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国学位论文全文数据库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国专利全文数据库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国重要会议论文全文数据库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;英文论文全文数据库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;港澳台学术文献库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;写邦云论文库</font>
+<br ></br>
+<br ></br>
+<font style="font-weight: bold">编&nbsp;号：${document.uuid}</font>
+<br ></br>
+<font style="font-weight: bold">标&nbsp;题：${document.docTitle}</font>
+<br ></br>
+<font style="font-weight: bold">长&nbsp;度：${(document.norm.wordCount)}</font>
+<br ></br>
+<font style="font-weight: bold">时&nbsp;间：${document.createDate?string('yyyy-MM-dd HH:mm:ss')}</font>
+<br ></br>
+<br ></br>
+<!-- <br ></br>
+<br ></br>
+<font style="font-weight: bold">相似资源列表（学术期刊、学位论文）：</font>
+<br ></br>
+<font style="font-weight: bold">1、相似度：5% &nbsp; 篇名：《论文测试》</font>
+<p></p>
+<font style="font-weight: bold">来源：学术期刊《高校论文》 &nbsp; 2013年02期  &nbsp; 作者 ：张三</font>
+<br ></br>
+
+<font style="font-weight: bold">2、相似度：5% &nbsp; 篇名：《论文测试》</font>
+<p></p>
+<font style="font-weight: bold">来源：学术期刊《高校论文》 &nbsp; 2013年02期  &nbsp; 作者 ：张三</font>
+<br ></br>
+<br ></br> -->
+
+<br ></br>
+<br ></br>
+<font style="font-weight: bold">相似资源列表（互联网）：</font>
+<br ></br>
+<!-- <#assign var = 1 >
+<#list checkResultSentenceListForPdf as sentence>
+	<#list sentence.detailsMsgs as detailsMsg>
+		<font style="font-weight: bold">${var+1}、相似度：(${(detailsMsg.simDegree*100)?string("0.##")}%) </font>
+		<font style="font-weight: bold"> 标题：《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》 </font>
+		<p></p>
+		<font style="font-weight: bold"><#if detailsMsg.resultLink?exists>${detailsMsg.resultLink}</#if></font>
+		<br ></br>
+		<br ></br>
+	</#list>
+</#list> -->
+<br ></br>
+<br ></br>
+<font style="font-weight: bold">全文简明报告：</font>
+<br ></br>
+<br ></br>
+${pdfContet}
+<center><h3>检测报告有WriteHelp文献相似度检测系统生成</h3></center>
+<center><h3>Copyright2012-2014 WriteHelp</h3></center>
+</body>
+</html>

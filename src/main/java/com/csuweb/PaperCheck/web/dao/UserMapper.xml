@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csuweb.PaperCheck.web.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.csuweb.PaperCheck.web.model.User" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="userimage" property="userimage" jdbcType="VARCHAR" />
+    <result column="birthdate" property="birthdate" jdbcType="DATE" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="loginname" property="loginname" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="loginstate" property="loginstate" jdbcType="VARCHAR" />
+    <result column="roleid" property="roleid" jdbcType="VARCHAR" />
+    <result column="qqopenid" property="qqopenid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, username, userimage, birthdate, sex, tel, qq, email, loginname, pwd, createtime, 
+    loginstate, roleid, qqopenid
+  </sql>
+  
+  <select id="selectCountUserByRoleId" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select count(*)
+    from user
+    where roleid = #{roleid,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="authentication" resultMap="BaseResultMap" parameterType="com.csuweb.PaperCheck.web.model.User" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where loginname = #{loginname,jdbcType=VARCHAR}
+  </select>
+  <!-- 通过当前对象的roleid查询出其权限内可操作的user对象 -->
+  <select id="selAllowedUser" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where roleid is null or 
+    roleid in
+    <foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
+ 	 #{item}  
+ 	</foreach>  
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.csuweb.PaperCheck.web.model.User" >
+    insert into user (id, username, userimage, 
+      birthdate, sex, tel, qq, 
+      email, loginname, pwd, 
+      createtime, loginstate, roleid, 
+      qqopenid)
+    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{userimage,jdbcType=VARCHAR}, 
+      #{birthdate,jdbcType=DATE}, #{sex,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{loginstate,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}, 
+      #{qqopenid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csuweb.PaperCheck.web.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="userimage != null" >
+        userimage,
+      </if>
+      <if test="birthdate != null" >
+        birthdate,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="loginname != null" >
+        loginname,
+      </if>
+      <if test="pwd != null" >
+        pwd,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="loginstate != null" >
+        loginstate,
+      </if>
+      <if test="roleid != null" >
+        roleid,
+      </if>
+      <if test="qqopenid != null" >
+        qqopenid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userimage != null" >
+        #{userimage,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null" >
+        #{birthdate,jdbcType=DATE},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginstate != null" >
+        #{loginstate,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="qqopenid != null" >
+        #{qqopenid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csuweb.PaperCheck.web.model.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userimage != null" >
+        userimage = #{userimage,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null" >
+        birthdate = #{birthdate,jdbcType=DATE},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        loginname = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginstate != null" >
+        loginstate = #{loginstate,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        roleid = #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="qqopenid != null" >
+        qqopenid = #{qqopenid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateBydeleteRoleId" parameterType="com.csuweb.PaperCheck.web.model.User" >
+    update user
+    set roleid = null
+    where roleid = #{roleid,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.csuweb.PaperCheck.web.model.User" >
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      userimage = #{userimage,jdbcType=VARCHAR},
+      birthdate = #{birthdate,jdbcType=DATE},
+      sex = #{sex,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      loginname = #{loginname,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      loginstate = #{loginstate,jdbcType=VARCHAR},
+      roleid = #{roleid,jdbcType=VARCHAR},
+      qqopenid = #{qqopenid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

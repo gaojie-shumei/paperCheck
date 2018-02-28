@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd ">     
+<html xmlns="http://www.w3.org/1999/xhtml ">     
+<head>
+<meta charset="UTF-8"></meta>
+<title>简明打印版</title>
+<style type="text/css">         
+body {     
+			font-family: KaiTi_GB2312;
+}     
+.paper .autotype3{color:#FF0000;}
+.paper .autotype2{color:#FFA500;}
+</style>
+</head>
+<body>
+<center><h1>PaperFree检测报告简明打印版</h1></center>
+<br ></br>
+<br ></br>
+<font style="font-weight: bold;">总相似率：<font style="color: #F00; font-size: 25px;">${(document.norm.similarityRate*100)?string("0.##")}%</font></font>
+<br ></br>
+<br ></br>
+<font style="font-weight: bold;">基本信息：</font>
+<br ></br>
+<font style="font-weight: bold">文档名称：${document.docTitle}</font>
+<br ></br>
+<font style="font-weight: bold">文档字数：${(document.norm.wordCount)}</font>
+<br ></br>
+<font style="font-weight: bold">提交人姓名：${document.submitterName}</font>
+<br ></br>
+<font style="font-weight: bold">检测范围：中国学术期刊数据库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国学位论文全文数据库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国重要会议论文全文数据库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国重要报纸全文数据库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国专利全文数据库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;港澳台学术文献库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;英文论文全文数据库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PaperFree云论文库</font>
+<br ></br>
+<font style="font-weight: bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;互联网资源</font>
+<br ></br>
+<br ></br>
+<font style="font-weight: bold">编&nbsp;号：${document.uuid}</font>
+<br ></br>
+<font style="font-weight: bold">标&nbsp;题：${document.docTitle}</font>
+<br ></br>
+<font style="font-weight: bold">长&nbsp;度：${(document.norm.wordCount)}</font>
+<br ></br>
+<font style="font-weight: bold">时&nbsp;间：${document.createDate?string('yyyy-MM-dd HH:mm:ss')}</font>
+<br ></br>
+<br ></br>
+<#list bibliographyList as bibliography>
+		<font style="font-weight: bold">${bibliography_index+1}、 相似度：(${(bibliography.similarity*100)?string("0.##")}%) </font>
+		<br ></br>
+								<#if bibliography.checkRange == "0"> 
+	                        			<font style="font-weight: bold">来源：PaperFree云论文库 </font>
+	                        			<br ></br>
+										<font style="font-weight: bold">篇名：《<#if bibliography.title?exists>${bibliography.title}</#if>》</font>
+										<br ></br>
+										<font style="font-weight: bold">来源：<#if bibliography.link?exists>${bibliography.link}<#else>#</#if></font>
+	                        	<#elseif  bibliography.checkRange == "1">
+	                        			<font style="font-weight: bold">来源：中国学位论文全文数据库</font>
+	                        			<br ></br>
+										<font style="font-weight: bold">篇名：《<#if bibliography.title?exists>${bibliography.title}</#if>》</font>
+	                        	<#elseif  bibliography.checkRange == "2">
+	                        			<font style="font-weight: bold">来源：中国学术期刊数据库</font>
+	                        			<br ></br>
+										<font style="font-weight: bold">篇名：《<#if bibliography.title?exists>${bibliography.title}</#if>》</font>
+	                        	<#elseif  bibliography.checkRange == "3">
+	                        			<font style="font-weight: bold">来源：中国重要会议论文全文数据库</font>
+	                        			<br ></br>
+										<font style="font-weight: bold">篇名：《<#if bibliography.title?exists>${bibliography.title}</#if>》</font>
+	                        	<#elseif  bibliography.checkRange == "4">
+	                        			<font style="font-weight: bold">来源：中国重要报纸全文数据库</font>
+	                        			<br ></br>
+										<font style="font-weight: bold">篇名：《<#if bibliography.title?exists>${bibliography.title}</#if>》</font>
+	                        	<#elseif  bibliography.checkRange == "5">
+	                        			<font style="font-weight: bold">来源：中国专利全文数据库</font>
+	                        			<br ></br>
+										<font style="font-weight: bold">篇名：《<#if bibliography.title?exists>${bibliography.title}</#if>》</font>
+	                        	<#elseif  bibliography.checkRange == "6">
+	                        			<font style="font-weight: bold">来源：港澳台学术文献库</font>
+	                        			<br ></br>
+										<font style="font-weight: bold">篇名：《<#if bibliography.title?exists>${bibliography.title}</#if>》</font>
+	                        	<#elseif  bibliography.checkRange == "7">
+	                        			<font style="font-weight: bold">来源：英文论文全文数据库</font>
+	                        			<br ></br>
+										<font style="font-weight: bold">篇名：《<#if bibliography.title?exists>${bibliography.title}</#if>》</font>
+	                        	<#elseif  bibliography.checkRange == "8">
+	                        			<font style="font-weight: bold">来源：互联网资源</font>
+	                        			<br ></br>
+	                        			<font style="font-weight: bold">标题：《<#if bibliography.title?exists>${bibliography.title}</#if>》</font>
+	                        			<br ></br>
+	                        			<font style="font-weight: bold">来源：<#if bibliography.link?exists>${bibliography.link}<#else>#</#if></font>
+	                        	<#elseif  bibliography.checkRange == "9">
+	                        			<font style="font-weight: bold">来源：自建比对库</font>
+	                        			<br ></br>
+	                        			<font style="font-weight: bold">文档标题：《<#if bibliography.title?exists>${bibliography.title}</#if>》</font>
+	                        	<#elseif  bibliography.checkRange == "10">
+	                        			<font style="font-weight: bold">来源：中国学术期刊数据库</font>
+	                        			<br ></br>
+	                        			<font style="font-weight: bold">篇名：《<#if bibliography.title?exists>${bibliography.title}</#if>》</font>
+	                        			<br ></br>
+	                        			<font style="font-weight: bold">作者：<#if bibliography.writer?exists>${bibliography.writer}</#if></font>
+	                        			<br ></br>
+	                        			<font style="font-weight: bold">年份：<#if bibliography.year?exists>${bibliography.year}</#if></font>
+	                        	</#if>
+	                        	<br ></br>
+								<br ></br>
+</#list>
+<br ></br>
+<br ></br>
+<font style="font-weight: bold">全文简明报告：</font>
+<br ></br>
+<br ></br>
+<div class="paper">
+	<#list paragraphsForPDFs as p>
+   		<p>${p}</p>
+   	</#list>
+</div>
+<center><h3>检测报告由PaperFree文献相似度检测系统生成</h3></center>
+<center><h3>Copyright2012-2015 WriteHelp</h3></center>
+</body>
+</html>

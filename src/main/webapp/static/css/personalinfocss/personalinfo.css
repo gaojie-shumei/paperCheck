@@ -1,0 +1,50 @@
+.relativetd{
+	position: relative;
+}
+#userimage,#userimage1{
+	height: 70px;
+	width: 70px;
+	float: left;
+	margin-left:10px;
+	/* border-radius: 16px;
+	-moz-border-radius: 16px; */
+	-webkit-border-radius: 16px;
+	/* -ms-border-radius: 16px; */
+	vertical-align: middle;
+	/* margin-right: -10px; */
+}
+#updateimg{
+	height: 30px;
+	width: 30px;
+	position: absolute;
+	left:37px;
+	top:37px;
+	z-index:299;
+	/* border-radius: 16px;
+	-moz-border-radius: 16px; */
+	-webkit-border-radius: 16px;
+	/* -ms-border-radius: 16px; */
+	vertical-align: middle;
+	/* margin-right: -10px; */
+}
+.file_upload{ 
+    height: 70px;
+    width:70px; 
+    text-align: center; 
+    line-height: 70px; 
+    opacity: 0; 
+    cursor: pointer; 
+  /*margin: 0; 
+    padding: 0; 
+    top: 0; 
+    left: 0; */ 
+    position: absolute;
+    left:17px;
+    filter: alpha(opacity=0);
+    z-index:299;
+} 
+.form-control[readonly]{
+    cursor:default;
+    background-color: #FFF;
+    opacity: 1;
+}

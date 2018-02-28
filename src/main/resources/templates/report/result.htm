@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <link href="../../img/stylesheet.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+
+<body>
+	<div class="mainbody result">
+    	<strong class="title">原文句子</strong>
+    	<div class="p source">
+        	${sentence.sentence}
+        	<!-- <div align="right">
+        	<img id="result_span_a_${sentenceIndex}" src="../../img/copycode.gif" data-clipboard-text="${sentence.sentence}" alt="复制本句">复制本句</img>
+        	&nbsp;&nbsp;&nbsp;&nbsp;
+        	<input id="btn_a_${sentenceIndex}" type="button" style="background-image: url(../../img/down.png);" onclick="submitPart('${sentence.sentence}')"><font color="red">句子降重</font></input>
+        	</div> -->
+        </div>
+
+        <strong class="title">片段位置图</strong>
+    	<p>
+        	<img src="../../img/RedImage_${sentence.sentenceIndex}.png"/>
+        </p>
+
+		<#list sentence.detailsMsgs as detailsMsg>
+		<div class="p">
+			 	<strong class="title"><span class="conNum1">${detailsMsg_index+1}  </span> <span style="float: right;">相似率：${(detailsMsg.simDegree*100)?string("0.##")}%</span></strong>
+		        <div class="p">
+		        	${detailsMsg.resultContent}
+		        </div>
+		       	<table class="detail">
+					<tr><td width="60">标题</td><td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td></tr>
+					  <#if detailsMsg.resultCheckRange == "0"> 
+	                             	<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">PaperFree云论文库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td><a href="<#if detailsMsg.resultLink?exists>${detailsMsg.resultLink}</#if>" target="_blank">《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</a></td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "1">
+	                        			<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">中国学位论文全文数据库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "2">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">中国学术期刊数据库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "3">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">中国重要会议论文全文数据库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "4">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">中国重要报纸全文数据库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "5">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">中国专利全文数据库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "6">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">港澳台学术文献库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "7">
+	                        			<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">英文论文全文数据库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "8">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">互联网资源</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>链接：</td>
+	                                	<td><a href="<#if detailsMsg.resultLink?exists>${detailsMsg.resultLink}</#if>" target="_blank">《<#if detailsMsg.resultLink?exists>${detailsMsg.resultLink}</#if>》</a></td>
+	                             	 </tr>
+	                             <#elseif  detailsMsg.resultCheckRange == "9">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">自建比对库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>文档标题：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                             <#elseif  detailsMsg.resultCheckRange == "10">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">中国学术期刊数据库</td>
+	                             	</tr>
+	                             	 <tr>
+	                                	<td>作者：</td>
+	                                	<td><#if detailsMsg.resultWriter?exists>${detailsMsg.resultWriter}</#if></td>
+	                             	 </tr>
+	                             	 <tr>
+	                                	<td>期刊名：</td>
+	                                	<td>《<#if detailsMsg.nameC?exists>${detailsMsg.nameC}</#if>》</td>
+	                             	 </tr>
+	                             	 <tr>
+	                                	<td>年份：</td>
+	                                	<td><#if detailsMsg.resultYear?exists>${detailsMsg.resultYear}</#if></td>
+	                             	 </tr>
+	                        	</#if>
+		       	</table>
+       	</div>
+		</#list>
+		
+		<p></p>
+		<table width="100%" cellpadding="3" cellspacing="3" style="margin-bottom:15px;margin-top:15px;border: 1px solid #C0C0C0;" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF"><tbody>
+	<tr><td width="100%"><div class="green" style="font-size:17px;padding-left:5px;">该句修改建议</div> </td></tr>
+
+	<#list sentence.synonymList as syn>
+	<tr><td width="100%" align="left">${syn}<br></td></tr>
+	</#list>
+	</tbody></table>
+    </div>
+    
+    
+    
+    <form id="fm" action="http://www.paperfree.cn/user_gc.html" target="_bank" method="post">
+		<input name="gc" type="hidden"/>
+	</form>
+</body>
+</html>
+<script type="text/javascript" src="../jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="../ZeroClipboard.js"></script>
+<script type="text/javascript">
+	var clip${sentenceIndex} = new ZeroClipboard( document.getElementById("result_span_a_${sentenceIndex}"), {
+		moviePath: "../ZeroClipboard.swf"
+	} );
+	clip${sentenceIndex}.on( 'complete', function(client, args) {
+		alert("复制成功!");
+	} );
+	
+	function submitPart(partContent){
+		$("#fm input[name='gc']").val(partContent);
+		$("#fm").submit();
+	}
+</script>

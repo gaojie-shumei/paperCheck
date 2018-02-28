@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <link href="../img/stylesheet.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+    <div class="mainbody">
+    	<div class="view">
+        	<div class="main">
+				<div class="title">总相似率：${(document.norm.similarityRate*100)?string("0.##")}%</div>
+                <table class="custom">
+                	<thead>
+                    	<tr>
+                            <td width="100">原创率</td>
+                            <td width="100">复写率</td>
+                            <!-- <td width="100">引用率</td> -->
+                            <td width="100">总字数</td>
+                            <td width="100">检测字数</td>
+                            <td width="100">检测段落</td>
+                            <td width="100">检测句子数</td>
+                            <td width="100">复写字数</td>
+                           <!--  <td width="100">引用字数</td> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	<tr>
+                            <td>${((1-document.norm.similarityRate)*100)?string("0.##")}%</td>
+                            <td>${(document.norm.similarityRate*100)?string("0.##")}%</td>
+                            <!-- <td>${(document.norm.quoteRate*100)?string("0.##")}%</td> -->
+                            <td>${(document.norm.wordCount)}</td>
+                            <td>${(document.checkchar)}</td>
+                            <td>${(document.checkparacount)}</td>
+                            <td>${(document.checksencount)}</td>
+                            <td>${(document.norm.similarityWordCount)}</td>
+                          <!--   <td>${(document.norm.quoteWordCount)}</td> -->
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <p style="color:#666;">
+					报告注解：
+					<ul style="color:#666;">
+						<li>总相似率即送检论文中与检测范围所有文献相似的部分（包括参考引用部分）占整个送检论文的比重，总相似率=抄袭率+引用率；</li>
+						<li>引用率即送检论文中被系统识别为引用的部分占整个送检论文的比重（引用部分一般指正确标示引用的部分）；</li>
+						<li>原创率即送检论文中剔除雷同片段和引用片段后占整个送检论文的比重，一般可用于论文的原创性和新颖性评价，原创率=100%-抄袭率-引用率；</li>
+						<li>抄袭率即送检论文中与检测范围所有文献相似的部分（不包括参考引用部分）占整个送检论文的比重；</li>
+						<li>详细报告中，红色字体标注严重抄袭片段、橙色字体标注轻度抄袭片段、绿色字体标注引用片段、黑色字体标注原创片段。</li>
+					</ul>
+				</p>
+
+                <div class="title" style="margin-top:20px;">相似片段位置图</div>
+                <div>
+                	<img src="../img/RedImage.png"/>
+                	<p>注：<font color=red>红色部分</font>为论文相似部分，<font color=green>绿色部分</font>为论文引用部分</p>
+                </div>
+
+                <div class="title" style="margin-top:20px;">相似文献汇总</div>
+                <table>
+                	<#list bibliographyList as bibliography>
+	                	<tr>
+	                    	<td width="30">${bibliography_index+1}</td>
+	                        <td width="125">
+	                        	<img width="120"
+	                        		title="${(bibliography.similarity*100)?string("0.##")}%"
+									alt="${(bibliography.similarity*100)?string("0.##")}%" src="../img/progressbar.gif"
+									style="width: 120px;
+										height: 20px;
+										background-image: url('../img/<#if bibliography.similarity lt 0.4>progressbg_yellow.gif<#elseif bibliography.similarity lt 0.5>progressbg_orange.gif<#else>progressbg_red.gif</#if>');
+										padding: 0px;
+										margin: 0px;
+										background-position: ${(-120*(1-bibliography.similarity))?string("0.##")}px ${(bibliography.similarity*100)?string("0.##")}%;" />
+	                        </td>
+	                        <td width="40">
+	                        	${(bibliography.similarity*100)?string("0.##")}%
+	                        </td>
+	                        <td>
+	                        	<#if bibliography.checkRange == "0"> 
+	                        			<span class="gray">来源：</span>PaperFree云论文库
+										<span class="gray">篇名：</span>《<#if bibliography.title?exists>${bibliography.title}</#if>》
+										<a href="<#if bibliography.link?exists>${bibliography.link}<#else>#</#if>" target="_blank" class="cloud">查看来源</a>
+	                        	<#elseif  bibliography.checkRange == "1">
+	                        			<span class="gray">来源：</span>中国学位论文全文数据库
+										<span class="gray">篇名：</span>《<#if bibliography.title?exists>${bibliography.title}</#if>》
+	                        	<#elseif  bibliography.checkRange == "2">
+	                        			<span class="gray">来源：</span>中国学术期刊数据库
+										<span class="gray">篇名：</span>《<#if bibliography.title?exists>${bibliography.title}</#if>》
+	                        	<#elseif  bibliography.checkRange == "3">
+	                        			<span class="gray">来源：</span>中国重要会议论文全文数据库
+										<span class="gray">篇名：</span>《<#if bibliography.title?exists>${bibliography.title}</#if>》
+	                        	<#elseif  bibliography.checkRange == "4">
+	                        			<span class="gray">来源：</span>中国重要报纸全文数据库
+										<span class="gray">篇名：</span>《<#if bibliography.title?exists>${bibliography.title}</#if>》
+	                        	<#elseif  bibliography.checkRange == "5">
+	                        			<span class="gray">来源：</span>中国专利全文数据库
+										<span class="gray">篇名：</span>《<#if bibliography.title?exists>${bibliography.title}</#if>》
+	                        	<#elseif  bibliography.checkRange == "6">
+	                        			<span class="gray">来源：</span>港澳台学术文献库
+										<span class="gray">篇名：</span>《<#if bibliography.title?exists>${bibliography.title}</#if>》
+	                        	<#elseif  bibliography.checkRange == "7">
+	                        			<span class="gray">来源：</span>英文论文全文数据库
+										<span class="gray">篇名：</span>《<#if bibliography.title?exists>${bibliography.title}</#if>》
+	                        	<#elseif  bibliography.checkRange == "8">
+	                        			<span class="gray">来源：</span>互联网资源
+	                        			<span class="gray">标题：</span>《<#if bibliography.title?exists>${bibliography.title}</#if>》
+										<a href="<#if bibliography.link?exists>${bibliography.link}<#else>#</#if>" target="_blank" class="cloud">查看来源</a>
+								<#elseif  bibliography.checkRange == "9">
+	                        			<span class="gray">标题：</span>自建比对库
+										<span class="gray">文档标题：</span>《<#if bibliography.title?exists>${bibliography.title}</#if>》
+								<#elseif  bibliography.checkRange == "10">
+	                        			<span class="gray">来源：</span>中国学术期刊数据库
+										<span class="gray">篇名：</span>《<#if bibliography.title?exists>${bibliography.title}</#if>》
+										<span class="gray">期刊名：</span>《<#if bibliography.nameC?exists>${bibliography.nameC}</#if>》
+										<span class="gray">年份：<#if bibliography.year?exists>${bibliography.year}</#if>
+										<span class="gray">作者：<#if bibliography.writer?exists>${bibliography.writer}</#if>
+	                        	</#if>
+	                        </td>
+	                    </tr>
+                    </#list>
+                </table>
+        	</div>
+        </div>
+
+    	<div class="info">
+            <div class="main">
+            	<h2>报告信息</h2>
+                <div class="box">
+                	<div class="title">基本信息</div>
+                	<table style="line-height:24px;">
+                    	<tr>
+                        	<td width="80">文档名称：</td>
+                            <td>${document.docTitle}</td>
+                        </tr>
+                    	<tr>
+                        	<td width="80">报告编号：</td>
+                            <td>${document.uuid}</td>
+                        </tr>
+                        <tr>
+                        	<td>文档字数：</td>
+                            <td>${document.wordCount}</td>
+                        </tr>
+                        <tr>
+                        	<td>提交人姓名：</td>
+                            <td>${document.submitterName}</td>
+                        </tr>
+                        <tr>
+                        	<td>提交方式：</td>
+                            <td>
+	                            <#switch document.submitMode>
+									<#case 0>
+										粘贴文本检测
+									<#break>
+									<#case 1>
+										提交文档检测
+									<#break>
+									<#case 2>
+										检测在线文档
+									<#break>
+									<#default>
+										未知方式
+								</#switch>
+							</td>
+                        </tr>
+                        <tr>
+                        	<td valign="top">检测范围：</td>
+                            <td>
+								中国学位论文全文数据库<br/>
+								中国学术期刊数据库<br/>
+								中国重要会议论文全文数据库<br/>
+								中国重要报纸全文数据库<br/>
+								中国专利全文数据库<br/>
+								港澳台学术文献库<br/>
+								英文论文全文数据库<br/>
+								PaperFree云论文库<br/>
+								互联网资源<br/>
+								自建比对库
+							</td>
+                        </tr>
+                        <tr>
+                        	<td>提交时间：</td>
+                            <td>${document.createDate?string('yyyy-MM-dd HH:mm:ss')}</td>
+                        </tr>
+                    </table>
+                </div>
+               <div class="box">
+                   <div class="title">防伪信息</div>
+                    <div style="text-align:center;padding:20px;">
+                    	<img src="../img/QRCode.png"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

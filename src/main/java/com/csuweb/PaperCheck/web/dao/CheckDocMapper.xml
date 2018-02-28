@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csuweb.PaperCheck.web.dao.CheckDocMapper" >
+  <resultMap id="BaseResultMap" type="com.csuweb.PaperCheck.web.model.CheckDoc" >
+    <id column="guid" property="guid" jdbcType="VARCHAR" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="subclass" property="subclass" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="danWei" property="danwei" jdbcType="VARCHAR" />
+    <result column="doctype" property="doctype" jdbcType="VARCHAR" />
+    <result column="repotype" property="repotype" jdbcType="VARCHAR" />
+    <result column="recalladdr" property="recalladdr" jdbcType="VARCHAR" />
+    <result column="timestamp" property="timestamp" jdbcType="TIMESTAMP" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="xsl" property="xsl" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="startstmp" property="startstmp" jdbcType="TIMESTAMP" />
+    <result column="endstmp" property="endstmp" jdbcType="TIMESTAMP" />
+    <result column="algorithm" property="algorithm" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.csuweb.PaperCheck.web.model.CheckDocWithBLOBs" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="xmlcontent" property="xmlcontent" jdbcType="LONGVARCHAR" />
+    <result column="html" property="html" jdbcType="LONGVARCHAR" />
+    <result column="xspaper" property="xspaper" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    guid, token, userid, title, keyword, year, subclass, author, danWei, doctype, repotype, 
+    recalladdr, timestamp, path, xsl, state, startstmp, endstmp, algorithm
+  </sql>
+  <sql id="Blob_Column_List" >
+    content, xmlcontent, html, xspaper
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from checkdoc
+    where guid = #{guid,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询该用户在该两个状态下的待查重文章个数 -->
+  <select id="selectCountByState"  resultType="java.lang.Integer" parameterType="java.lang.String">
+  	select count(*) 
+  	from checkdoc 
+  	where state=#{state,jdbcType=VARCHAR} or state=#{state2,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询该用户在该两个状态下的待查重文章 -->
+  <select id="selectCheckDoc"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+  	select 
+	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from checkdoc 
+    where state=#{state,jdbcType=VARCHAR} or state=#{state2,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询该用户查重的文章 -->
+  <select id="selectCheckDocByUserId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+  	select 
+  	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from checkdoc 
+    where userid=#{userid,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from checkdoc
+    where guid = #{guid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.csuweb.PaperCheck.web.model.CheckDocWithBLOBs" >
+    insert into checkdoc (guid, token, userid, 
+      title, keyword, year, 
+      subclass, author, danWei, 
+      doctype, repotype, recalladdr, 
+      timestamp, path, xsl, 
+      state, startstmp, endstmp, 
+      algorithm, content, xmlcontent, 
+      html, xspaper)
+    values (#{guid,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{keyword,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, 
+      #{subclass,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{danwei,jdbcType=VARCHAR}, 
+      #{doctype,jdbcType=VARCHAR}, #{repotype,jdbcType=VARCHAR}, #{recalladdr,jdbcType=VARCHAR}, 
+      #{timestamp,jdbcType=TIMESTAMP}, #{path,jdbcType=VARCHAR}, #{xsl,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{startstmp,jdbcType=TIMESTAMP}, #{endstmp,jdbcType=TIMESTAMP}, 
+      #{algorithm,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}, #{xmlcontent,jdbcType=LONGVARCHAR}, 
+      #{html,jdbcType=LONGVARCHAR}, #{xspaper,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csuweb.PaperCheck.web.model.CheckDocWithBLOBs" >
+    insert into checkdoc
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="guid != null" >
+        guid,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="keyword != null" >
+        keyword,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="subclass != null" >
+        subclass,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="danwei != null" >
+        danWei,
+      </if>
+      <if test="doctype != null" >
+        doctype,
+      </if>
+      <if test="repotype != null" >
+        repotype,
+      </if>
+      <if test="recalladdr != null" >
+        recalladdr,
+      </if>
+      <if test="timestamp != null" >
+        timestamp,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="xsl != null" >
+        xsl,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="startstmp != null" >
+        startstmp,
+      </if>
+      <if test="endstmp != null" >
+        endstmp,
+      </if>
+      <if test="algorithm != null" >
+        algorithm,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="xmlcontent != null" >
+        xmlcontent,
+      </if>
+      <if test="html != null" >
+        html,
+      </if>
+      <if test="xspaper != null" >
+        xspaper,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="guid != null" >
+        #{guid,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null" >
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="subclass != null" >
+        #{subclass,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="danwei != null" >
+        #{danwei,jdbcType=VARCHAR},
+      </if>
+      <if test="doctype != null" >
+        #{doctype,jdbcType=VARCHAR},
+      </if>
+      <if test="repotype != null" >
+        #{repotype,jdbcType=VARCHAR},
+      </if>
+      <if test="recalladdr != null" >
+        #{recalladdr,jdbcType=VARCHAR},
+      </if>
+      <if test="timestamp != null" >
+        #{timestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="xsl != null" >
+        #{xsl,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="startstmp != null" >
+        #{startstmp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endstmp != null" >
+        #{endstmp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="algorithm != null" >
+        #{algorithm,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="xmlcontent != null" >
+        #{xmlcontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="html != null" >
+        #{html,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="xspaper != null" >
+        #{xspaper,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csuweb.PaperCheck.web.model.CheckDocWithBLOBs" >
+    update checkdoc
+    <set >
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null" >
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="subclass != null" >
+        subclass = #{subclass,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="danwei != null" >
+        danWei = #{danwei,jdbcType=VARCHAR},
+      </if>
+      <if test="doctype != null" >
+        doctype = #{doctype,jdbcType=VARCHAR},
+      </if>
+      <if test="repotype != null" >
+        repotype = #{repotype,jdbcType=VARCHAR},
+      </if>
+      <if test="recalladdr != null" >
+        recalladdr = #{recalladdr,jdbcType=VARCHAR},
+      </if>
+      <if test="timestamp != null" >
+        timestamp = #{timestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="xsl != null" >
+        xsl = #{xsl,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="startstmp != null" >
+        startstmp = #{startstmp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endstmp != null" >
+        endstmp = #{endstmp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="algorithm != null" >
+        algorithm = #{algorithm,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="xmlcontent != null" >
+        xmlcontent = #{xmlcontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="html != null" >
+        html = #{html,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="xspaper != null" >
+        xspaper = #{xspaper,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where guid = #{guid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.csuweb.PaperCheck.web.model.CheckDocWithBLOBs" >
+    update checkdoc
+    set token = #{token,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      year = #{year,jdbcType=VARCHAR},
+      subclass = #{subclass,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      danWei = #{danwei,jdbcType=VARCHAR},
+      doctype = #{doctype,jdbcType=VARCHAR},
+      repotype = #{repotype,jdbcType=VARCHAR},
+      recalladdr = #{recalladdr,jdbcType=VARCHAR},
+      timestamp = #{timestamp,jdbcType=TIMESTAMP},
+      path = #{path,jdbcType=VARCHAR},
+      xsl = #{xsl,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      startstmp = #{startstmp,jdbcType=TIMESTAMP},
+      endstmp = #{endstmp,jdbcType=TIMESTAMP},
+      algorithm = #{algorithm,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR},
+      xmlcontent = #{xmlcontent,jdbcType=LONGVARCHAR},
+      html = #{html,jdbcType=LONGVARCHAR},
+      xspaper = #{xspaper,jdbcType=LONGVARCHAR}
+    where guid = #{guid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csuweb.PaperCheck.web.model.CheckDoc" >
+    update checkdoc
+    set token = #{token,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      year = #{year,jdbcType=VARCHAR},
+      subclass = #{subclass,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      danWei = #{danwei,jdbcType=VARCHAR},
+      doctype = #{doctype,jdbcType=VARCHAR},
+      repotype = #{repotype,jdbcType=VARCHAR},
+      recalladdr = #{recalladdr,jdbcType=VARCHAR},
+      timestamp = #{timestamp,jdbcType=TIMESTAMP},
+      path = #{path,jdbcType=VARCHAR},
+      xsl = #{xsl,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      startstmp = #{startstmp,jdbcType=TIMESTAMP},
+      endstmp = #{endstmp,jdbcType=TIMESTAMP},
+      algorithm = #{algorithm,jdbcType=VARCHAR}
+    where guid = #{guid,jdbcType=VARCHAR}
+  </update>
+</mapper>

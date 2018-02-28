@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="../img/stylesheet.css" rel="stylesheet" type="text/css"
+	media="all" />
+</head>
+
+<body>
+	<div class="paper">
+		<#list paragraphs as p>
+		<p>${p}</p>
+		</#list>
+	</div>
+	
+	<form id="fm" action="http://www.paperfree.cn/user_gc.html" target="_bank" method="post">
+		<input name="gc" type="hidden"/>
+	</form>
+</body>
+</html>
+<script type="text/javascript" src="jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="ZeroClipboard.js"></script>
+<script type="text/javascript">
+	<#list copyShowList as p>
+	var clip${p} = new ZeroClipboard( document.getElementById("span_a_${p}"), {
+		moviePath: "ZeroClipboard.swf"
+	} );
+	
+	clip${p}.on( 'complete', function(client, args) {
+		alert("复制成功!");
+	} );
+	</#list>
+	
+	
+	function submitPart(partContent){
+		$("#fm input[name='gc']").val(partContent);
+		$("#fm").submit();
+	}
+</script>
+
+<style type="text/css">
+ div[align=right]{
+	cursor:pointer;
+ }
+
+ div[align=right] input[type=button]{
+	cursor:pointer;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACA0lEQVQ4T6WSTWgTURDH//M2xRSlfmASU0S9iD3UD4xxAyoaRBTbbA+CHqS9CF48KwgKHtpLpRWP3kShBw9Cto1eBL0ou6kFv1IRoaKINBsoVASp5u04u1rZJumh9F3e7jzmN///zBBWeSia/7ln98a40X5NQR2ReBcDH+V+gboeSj6anG1V6z/AK5iHofCAQGlJ/EnMM3LvIKK1kjgH9gcSdrnUCAkBn47t27CuI14B8WYwXX1qO7fPAvoGoC5ZuQtMGCWwXviF7q2P3a9RSAioWeYwiC777F9J2eWbjVWqBbNfKboH8P1E0R1oBXCYaE9l3unIP0O9lddan/mFmRaStrOzBSD3PWiYPGaWG4rXZ5ZE7ql38+6aaJHQgmeZr4iwXeRtkl9hNR8BfJD+/GgsstiDO9KDi1r757dMlMca02d7s8cNw3jCzINJ273eZOFbIbOtjWJvAdKA3x8dV62QPQoyxkDo9BlnUrbzsAkQ2ujNnZM9uCtW4lLptcy/Im52iaH9oi5UyoyaZp1Pj0/K29+zZBNFSVdMxUYkeEie1gtoRgATDJ4mpW5JvF0a5GlwPl10p5sAEWnknc6mousb9EEZxngIYa7WNeU7S877JQqWG+FivGqZJ2TV7X8230hD964IEICqPQdPqpgKJvU8UXSsFQMCyMtMpu3A1NTv4PsPZS3CEUoK/vQAAAAASUVORK5CYII=') no-repeat scroll center center transparent !important;
+	border: none;
+	width: 16px;
+	margin-right: 2px;
+ }
+ 
+ div.gcView{
+ 	clear:both;
+ }
+ div.gcView:after{
+ 	content:'';
+ 	display:block;
+ 	clear:both;
+ }
+</style>
+
+<script type="text/javascript">
+$(function () {
+    $("div[align=right] input,div[align=right] font").off("click").removeAttr("onclick").click(function (e) {
+        e.stopImmediatePropagation();
+
+        var $this = $(this);
+        var $right = $this.closest("div[align=right]");
+        var $gcView = $right.data("gcView");
+
+        if (!$gcView) {
+            $gcView = $("<div class='gcView' />").hide().insertAfter($right);
+            $right.data("gcView", $gcView);
+
+            var $form = $("<form action='http://www.paperfree.cn/user_gc.html' target='_blank' method='post' />").appendTo($gcView);
+            $("<p>论文降重内容（内容的长度至多1000字。系统按照Word字数统计里面的字符数（不计空格）计算）：</p>").css({
+                "color": "#666",
+                "margin": ".5em 0 3px 0",
+                "font": "99% 'Helvetica Neue', Arial, Helvetica, san-serif"
+            }).appendTo($form);
+
+            $('<textarea name="content" rows="8" cols="20" id="paper_content" style="width:99%" value=""></textarea>').css({
+                "color": "#000",
+                "padding": ".3em",
+                "float": "none",
+                "margin-bottom": ".1em",
+                "font": "99% 'Helvetica Neue', Arial, Helvetica, san-serif"
+            }).appendTo($form);
+
+            $('<p><input type="submit" name="Submit" value="提交检测" /></p>').css({
+                "padding": "0 10px 50px 0",
+                "text-align": "right"
+            }).appendTo($form);
+
+            var partContent = "";
+            $right.prev().find("a[target=resultFrame]").text(function (index, text) {
+                partContent += $.trim(text);
+            });
+            $gcView.find("textarea").val(partContent);
+
+            $form.submit(function(){
+                $(this).parent().slideUp("fast");
+            });
+        }
+
+        if ($gcView.is(":animated")) {
+        } else if ($gcView.is(":visible")) {
+            $gcView.slideUp("fast");
+        } else {
+            $gcView.slideDown("fast").promise().done(function () {
+                $(this).find("textarea").focus();
+            });
+        }
+
+        return false;
+    });
+
+});
+</script>

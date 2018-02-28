@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>无标题文档</title>
+	<link href="../img/stylesheet.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+
+<body>
+	<div class="mainbody part-report">
+        <strong class="title">相似片段详情</strong>
+
+        <#list checkResultSentenceList as sentence>
+	        <table class="custom" width="100%" id="result_${sentence.sentenceIndex}">
+	        	<thead>
+	        		<tr><td width="10%">&nbsp;</td><td width="45%">送检论文片段</td><td>相似论文片段</td></tr>
+	        	</thead>
+	        	<tbody>
+		            <tr>
+		            	<td align="center" valign="middle">
+		            		${sentence_index+1}
+		            	</td>
+		            	<td valign="top">
+		            		<p style="line-height:30px;">
+					        	位置：<img src="../img/RedImage_${sentence.sentenceIndex}.png"/>
+					        </p>
+		            		${sentence.sentence}
+		            	</td>
+		            	<td valign="top">
+		            	<#list sentence.detailsMsgs as detailsMsg>
+			            		<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:0px;">
+	                              <tr>
+	                                <td colspan="2"><span class="conNum1">${detailsMsg_index+1}</span></td>
+	                              </tr>
+	                              <tr>
+	                                <td colspan="2" style="border:1px solid #ccc">相似片断：${detailsMsg.resultContent}</td>
+	                              </tr>
+	                             <#if detailsMsg.resultCheckRange == "0"> 
+	                             	<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">PaperFree云论文库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "1">
+	                        			<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">中国学位论文全文数据库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "2">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">中国学术期刊数据库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "3">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">中国重要会议论文全文数据库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "4">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">中国重要报纸全文数据库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "5">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">中国专利全文数据库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "6">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">港澳台学术文献库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "7">
+	                        			<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">英文论文全文数据库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>篇名：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "8">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">互联网资源</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td>标题：</td>
+	                                	<td><a href="<#if detailsMsg.resultLink?exists>${detailsMsg.resultLink}</#if>" target="_blank">《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</a></td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "9">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                <td width="515">自建比对库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td width="55">文档标题：</td>
+	                                	<td>《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                        	<#elseif  detailsMsg.resultCheckRange == "10">
+	                        		<tr>
+	                             		<td width="55">来源：</td>
+		                                 <td width="515">中国学术期刊数据库</td>
+	                             	</tr>
+	                             	<tr>
+	                                	<td width="55">篇名：</td>
+	                                	<td width="515">《<#if detailsMsg.resultTitle?exists>${detailsMsg.resultTitle}</#if>》</td>
+	                             	 </tr>
+	                             	 <tr>
+	                                	<td width="55">作者：</td>
+	                                	<td width="515"><#if detailsMsg.resultWriter?exists>${detailsMsg.resultWriter}</#if></td>
+	                             	 </tr>
+	                             	 <tr>
+	                                	<td width="55">期刊名：</td>
+	                                	<td width="515">《<#if detailsMsg.nameC?exists>${detailsMsg.nameC}</#if>》</td>
+	                             	 </tr>
+	                             	 <tr>
+	                                	<td width="55">年份：</td>
+	                                	<td width="515"><#if detailsMsg.resultYear?exists>${detailsMsg.resultYear}</#if></td>
+	                             	 </tr>
+	                        	</#if>
+	                          </table>
+                            </#list>
+		                </td>
+		            </tr>
+		        </tbody>
+	        </table>
+	        <br/>
+        </#list>
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd ">     
+<html xmlns="http://www.w3.org/1999/xhtml ">     
+<head>
+<meta charset="UTF-8"></meta>
+<title>简明打印版</title>
+<style type="text/css">         
+body {     
+			font-family: KaiTi_GB2312;
+}     
+.paper .autotype3{color:#FF0000;}
+.paper .autotype2{color:#FFA500;}
+.green{color:#008000}
+</style>
+</head>
+<body>
+<center><h1>PaperFree系统生成辅助修改标色文档</h1></center>
+<br ></br>
+<h2>点击报告按钮<font color="red">“点我检测”</font>或者直接复制检测链接到浏览器既可再次检测，方便快捷检测网址：http://www.paperfree.cn</h2>
+<br ></br>
+<center><h2>该篇论文检测总相似度为:${(document.norm.similarityRate*100)?int}%</h2></center>
+<br ></br>
+<div class="paper">
+	<#list paragraphsForPDFs as p>
+   		<p>${p}</p>
+   	</#list>
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+body{margin:0px;padding:0px;}
+em{color:red;font-style:normal;}
+img{border:none;}
+h2{font-size:14px;}
+h1,ul,li{margin:0px;padding:0px;}
+a:link {color: #3B5999;text-decoration: none;}
+a:visited {text-decoration: none;color: #3B5999;}
+a:hover {text-decoration: underline;color: #3B5999;}
+a:active {text-decoration: none;color: #3B5999;}
+hr {background: url("hr.png") repeat-x scroll 0 0 transparent;border: 0 none;color: #E7E5E0;height: 2px;margin: 20px 0;}
+
+.logo{ position:absolute;left:10px;top:10px;}
+
+.percent{width:100px;border:1px solid #666;position:absolute;right:10px;top:10px;}
+.percent strong{font-size:12px;background:#3B5999;padding:2px; display:block;color:#fff;}
+
+.process{height:40px; position:relative;}
+.process .numerator{height:40px;}
+.process .similary{ font-family:"Arial Black";font-weight:bold;font-size:18px;width:100px;height:40px;line-height:40px;text-align:center; position:absolute;left:0px;top:0px;}
+
+.process .level {background:#CE9729;}
+.process .level_0 {background:#368E20;}
+.process .level_1 {background:#E5D238;}
+.process .level_2 {background:#D6871E;}
+.process .level_3 {background:#F00;}
+
+.info{text-align:center;padding-top:20px;}
+.info h1{font-size:18px;}
+.info i{font-size:12px;color:#666;}
+
+.top{height:80px;}
+.nav{height:30px;background:url(nav_bg.gif);font-size:12px;line-height:30px;}
+.nav .desc{float:left;margin-left:10px;color:#666;}
+.nav ul {list-style:none;float:right;margin-right:10px;}
+.nav ul li{float:left;margin-right:10px;}
+
+.mainbody{margin:10px;font-size:12px;}
+.mainbody table.custom{}
+.mainbody table.custom,.mainbody table.custom td{border:1px solid #cccccc;border-collapse:collapse;}
+.mainbody table.custom td{padding:5px;}
+.mainbody table.custom thead td{background: none repeat scroll 0 0 #E2E2E2;font-weight: bold;}
+
+.mainbody strong.title{display:block;height:30px;line-height:30px;font-size:14px;margin:10px 0px;}
+.mainbody strong span{font-weight:normal;font-size:12px;color:#666;}
+
+.whole-report .details{line-height:20px;}
+
+ul.explain { list-style-type:decimal;margin-left:20px;}
+ul.explain li{line-height:20px;}
+
+.paper{font-size:12px;line-height:20px;margin:10px;}
+/*.paper p{text-indent:20px;}*/
+.paper .autotype{color:red;}
+.paper .quote{color:green;}
+
+.result{font-size:12px;margin:10px;line-height:20px;}
+.result .source{color:#360;}
+.result h2{font-size:14px;}
+.result .p{border:1px solid #CCC;padding:5px;margin-bottom:10px;}
+.result .detail{font-size:12px;color:#666;}
+
+.part-report .detail{font-size:12px;color:#666;margin-bottom:5px;}
+
+.help{width:940px;margin:0px auto;}

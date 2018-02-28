@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>无标题文档</title>
+	<link href="../img/stylesheet.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+
+<body>
+	<div class="mainbody part-report">
+        <strong class="title">引用片段详情</strong>
+        <table class="custom" width="100%">
+        	<thead>
+        		<tr><td width="10%">序号</td><td>引用片段</td></tr>
+        	</thead>
+        	<tbody>
+        		<#list quoteSentenceList as sentence>
+        			<tr>
+        				<td align="center" valign="middle">${sentence_index+1}</td>
+        				<td valign="top">${sentence.sentence}</td>
+        			</tr>
+        		</#list>
+        	</tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+<!-- 设置可以使用注解 -->
+<context:annotation-config></context:annotation-config>
+<!-- 扫描注入bean对象 -->
+<context:component-scan base-package="com.csuweb.PaperCheck">
+	<context:exclude-filter type="regex" expression="com.csuweb.PaperCheck.web.controller"/>
+</context:component-scan>
+
+<!-- 开启这个配置 spring才能识别@Scheduled注解 -->
+  <task:annotation-driven scheduler="qbScheduler" mode="proxy"/>
+  <task:scheduler id="qbScheduler" pool-size="10"/>
+
+<!-- 在applicationContext.xml中没用装配过程，我猜可能是用了spring的自动扫描注入bean的原因。比如在xml中可能存在如下代码：在使用了下面的代码后可以不使用上一句代码-->
+<!-- <context:component-scan base-package="com.gaojie">
+<context:exclude-filter type="regex" expression="net.niit.controller.*"/>
+指定<context:exclude-filter>来进行过滤，说明此包不需要被扫描
+指定<context:include-filter>来进行过滤，说明此包需要被扫描
+</context:component-scan> -->
+
+	<!-- 加载log4j配置文件 -->
+	<!-- <bean id="log4jInitializer" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">  
+        <property name="targetClass"  
+                  value="org.springframework.util.Log4jConfigurer" />  
+        <property name="targetMethod" value="initLogging" />  
+        <property name="arguments">  
+            <list>  
+                <value>classpath*:log4j.properties</value>  
+            </list>  
+        </property>  
+    </bean>  --> 
+
+	<!-- 加载jdbc配置文件 -->
+<!-- 	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath*:application.properties</value>
+			</list>
+		</property>
+	</bean> -->
+	
+	<!-- 加载数据库连接的资源文件 -->
+	<context:property-placeholder location="classpath*:application.properties"/>
+
+	<!-- 为mybatis配置环境,配置连接池dataSource -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+
+	<!-- 配置mybatis的session，sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 加载Mybatis全局配置文件 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<!-- 实体类映射文件路径,多个使用*.xml来替代 -->
+		<property name="mapperLocations" value="classpath*:com/gaojie/dao/*.xml"></property>
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<!--动态代理实现 不用写mapper接口的实现 -->
+	<bean id="MapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 这里的basePackage 指定了mapper的接口路劲，这里的dao接口不用自己实现 -->
+		<!-- 扫描包路径，如果需要扫描多个包中间用半角逗号隔开 -->
+		<property name="basePackage" value="com.csuweb.PaperCheck.web.dao" />
+		<!-- 如果只有一个数据源的话可以不用指定，但是如果有多个数据源的话必须要指定 -->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<!--直接制定了sqlsessionTemplate名称，这个和上面的其实是一样的 -->
+		<!-- <property name="sqlSessionTemplateBeanName" value="sqlSession" /> -->
+	</bean>
+ 
+	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 定义一个事务通知者 通知一个bean id=transactionmanager的事务管理者管理事务 -->
+	<tx:advice id="adv" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 定义事务所管理的方法name=方法的名字或方法名字的一部分 -->
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="up*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="sel*" propagation="SUPPORTS" />
+			<tx:method name="*" propagation="SUPPORTS" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 定义切入点 -->
+	<aop:config>
+		<!-- 定义一个切入点 -->
+		<!-- 配置切入点 -->
+        <!-- execution()语法:execution (* com.xx.xx.impl..*.*(..))
+        首先明白这个表达式是用来匹配方法的,各种条件是为了筛选整个项目的方法。
+        (类的访问修饰符
+        第一个*表示方法返回值类型[*表示所有类型] 
+        com.xx.xx.impl表示包路径[*表示所有包]
+        .[.表示当前包下所有类的方法,..表示当前包下及此包下所有子包中的所有类的方法] 
+        第二个*表示类名[*表示所有类,可以匹配以X开头或结尾如X*、*X、X*X的类名]
+        第三个*表示方法名[*表示所有方法,可以匹配以X开头或结尾的如X*、*X、X*X的方法名]
+        (..)表示方法参数[..表示任何参数]
+        )-->
+		<aop:pointcut expression="execution(public * com.csuweb.PaperCheck.web.biz..*.*(..))"
+			id="pc1" />
+		<!-- 设置事务管理者 -->
+		<aop:advisor advice-ref="adv" pointcut-ref="pc1" />
+	</aop:config>
+
+</beans>

@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+	<link href="../img/stylesheet.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+
+<body>
+	<div class="header">
+    	<div class="logo"><a href="http://www.paperfree.cn" target="_blank"><img src="../img/logo.png"/><br></a>
+        	</div>
+        <div class="title">《<#if document.docTitle?exists>${document.docTitle}</#if>》检测报告</div>
+        <div class="similarity">
+            <span>总相似率</span>
+            <strong>${(document.norm.similarityRate*100)?string("0.##")}%</strong>
+        </div>
+    </div>
+    
+    <div class="toolbar">
+      <ul class="menu" style="margin-top: 4px;">
+            <li id="c1" onclick="c(1)"><a href="whole-report.htm" target="mainFrame" id="a1">综合评估</a></li>
+            <li class="cur" id="c2" onclick="c(2)"><a href="details-report.htm" target="mainFrame" id="a2">全文标红</a></li>
+            <li id="c3" onclick="c(3)"><a href="http://www.paperfree.cn/user_gc_view_report.html" target="_blank" id="a3"><font color="red">降重结果</font></a></li>
+            <li id="c4" onclick="c(4)"><a href="part-report.htm" target="mainFrame" id="a4">相似片段</a></li>
+            <li id="c5" onclick="c(5)"><a href="../PDF简明打印报告.pdf" target="_bank" id="a5">打印PDF</a></li>
+            <li id="c6" onclick="c(6)"><a href="../标色辅助修改.doc" target="_bank" id="a6">标色辅助修改</a></li>
+            <li id="c7" onclick="c(7)"><a href="help-report.htm" target="mainFrame" id="a7">使用帮助</a></li>
+          <script type="text/javascript">
+          function c(i){
+            for(x=1;x<8;x++){
+              document.getElementById('c'+x).className='';
+            }
+            document.getElementById('c'+i).className='cur';
+          }
+          </script>
+      </ul>
+    	<!-- <div class="info">报告编号：${document.uuid}</div> -->
+    </div>
+</body>
+</html>

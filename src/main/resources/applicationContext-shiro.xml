@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- 第四步 -->
+	<description>apache shiro配置</description>
+
+
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- Shiro的核心安全接口,这个属性是必须的 -->
+		<property name="securityManager" ref="securityManager" />
+		<!-- 要求登录时的链接,非必须的属性,默认会自动寻找Web工程根目录下的"/login.jsp"页面 -->
+		<property name="loginUrl" value="/resource/page/login" />
+		<!-- 登录成功后要跳转的连接 -->
+		<property name="successUrl" value="/resource/page/index" />
+		<!-- 用户访问未对其授权的资源时,所显示的连接 -->
+		<property name="unauthorizedUrl" value="/resource/page/401" />
+		<property name="filterChainDefinitions">
+			<value>
+				<!-- 静态资源允许访问 -->
+				/static/** = anon
+						<!-- 上传文件允许访问 -->
+						<!-- /uploadFiles/** = anon -->
+						<!-- 查重报告允许访问 -->
+						<!-- /paperReport/** = anon -->
+				<!-- 登录页允许访问 -->
+				/resource/page/login = anon
+				/resource/user/login = anon
+				<!-- 注册页面允许访问-->
+				 /resource/user/signup = anon
+				 <!-- 注册验证url允许访问 -->
+				 /resource/user/selUser = anon
+				<!-- 其他资源需要认证 -->
+				/** = authc
+
+			</value>
+		</property>
+	</bean>
+
+	<!-- 缓存管理器 使用Ehcache实现 -->
+	<!-- <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"> 
+		<property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/> 
+		</bean> -->
+
+	<!-- 安全管理器 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="securityRealm" />
+		<!-- cacheManager,集合spring缓存工厂 -->
+		<!-- <property name="cacheManager" ref="shiroEhcacheManager" /> -->
+		<!-- 使用默认的管理器 -->
+	</bean>
+
+	<!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
+	<bean
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod"
+			value="org.apache.shiro.SecurityUtils.setSecurityManager" />
+		<property name="arguments" ref="securityManager" />
+	</bean>
+
+	<!-- Shiro生命周期处理器 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	
+	<!-- 开启shiro注解,使之可以除controller层的其他层中使用 -->
+	<aop:config proxy-target-class="true"></aop:config>
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+</beans>
