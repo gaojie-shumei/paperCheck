@@ -23,7 +23,7 @@ function getReports(){
 						str = str + "<a href='./"+n.downloadPath+"' download='"+n.title+".html' class='btn  btn-info'>下载</a>";
 						str = str + "<a href='./"+n.downloadPath+"' class='btn btn-info' target='_blank'>在线查看</a>";
 						str = str + "<a href='javascript:void(0);' id="+n.guid+" name="+n.downloadPath+" class='btn btn-warning deleterecord'>删除</a>";
-					}else if(n.state=="检测失败"){
+					}else if(n.state=="检测失败"||(n.state=="检测完成"&&n.usefullife!="15天")){
 						str = str + "<a href='javaScript:void(0);' class='btn btn-preventDefault  disabled'>下载</a>";
 						str = str + "<a href='javaScript:void(0);' class='btn btn-preventDefault  disabled'>在线查看</a>";
 						str = str + "<a href='javascript:void(0);' id="+n.guid+" name="+n.downloadPath+" class='btn btn-warning deleterecord'>删除</a>";
@@ -45,18 +45,37 @@ function getReports(){
 				
 			}
 			reporttable.draw(false);
-			$(".flushThis").click(function(){
+			reporttable.destroy();
+			$(".flushThis").on("flushThis",function(){
 				var trobj = $(this).parents("tr");
 				var guid = trobj.children("td:first").children("div").prop("id");
-				getReportByGuid(guid,trobj);
+				var state = trobj.children("td:eq(2)").text();
+				console.log("flushThis执行啦");
+				if(state=="检测中"){
+					getReportByGuid(guid,trobj);
+				}
 			});
-			$(".flushThis").trigger("click");
+			$(".flushThis").trigger("flushThis");
+			//刷新功能
+//			var trarr = $("#reportshow tbody").children("tr");
+//			console.log("trarr.length="+trarr.length);
+//			for (var i = 0; i < trarr.length; i++) {
+//				var trobj = $(trarr[i]);
+//				var guid = trobj.children("td:first").children("div").prop("id");
+//				var state = trobj.children("td:eq(2)").text();
+//				if(state=="检测中"){
+//					getReportByGuid(guid,trobj);
+//				}
+//			}
+//			console.log("flushThis执行啦");
 			
 			$(".deleterecord").off("click");
 			$(".deleterecord").click(function(){
+				//alert("deleterecord");
 				//删除数据库中对应的记录，并删掉对应的报告
 				deleterecord($(this));
 			});
+			reporttable = mydataTable("#reportshow");
 		},
 		error:function(f,e,w){
 //			alert(e);
@@ -87,7 +106,7 @@ function getReportByGuid(guid,trobj){
 						str = str + "<a href='./"+n.downloadPath+"' download='"+n.title+".html' class='btn  btn-info'>下载</a>";
 						str = str + "<a href='./"+n.downloadPath+"' class='btn btn-info' target='_blank'>在线查看</a>";
 						str = str + "<a href='javascript:void(0);' id="+n.guid+" name="+n.downloadPath+" class='btn btn-warning deleterecord'>删除</a>";
-					}else if(n.state=="检测失败"){
+					}else if(n.state=="检测失败"||(n.state=="检测完成"&&n.usefullife!="15天")){
 						str = str + "<a href='javaScript:void(0);' class='btn btn-preventDefault  disabled'>下载</a>";
 						str = str + "<a href='javaScript:void(0);' class='btn btn-preventDefault  disabled'>在线查看</a>";
 						str = str + "<a href='javascript:void(0);' id="+n.guid+" name="+n.downloadPath+" class='btn btn-warning deleterecord'>删除</a>";
@@ -103,15 +122,13 @@ function getReportByGuid(guid,trobj){
 					trobj.children("td:eq(4)").html(n.xsl);
 					trobj.children("td:eq(5)").html(n.usefullife);
 					trobj.children("td:eq(6)").html(str);
-//					reporttable.row(trobj).data([
-//						"<div id="+n.guid+" style='width:240px;text-align:center;margin:0 auto;'>"+n.title+"</div>",
-//						"<div style='width:120px;text-align:center;margin:0 auto;'>"+n.algorithm+"</div>",
-//						n.state,
-//						n.checktime,
-//						n.xsl,
-//						n.usefullife,
-//						str
-//					]);
+					
+					$(".deleterecord").off("click");
+					$(".deleterecord").click(function(){
+						//alert("deleterecord");
+						//删除数据库中对应的记录，并删掉对应的报告
+						deleterecord($(this));
+					});
 				}
 			}
 			reporttable = mydataTable("#reportshow");

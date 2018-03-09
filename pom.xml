@@ -30,6 +30,9 @@
                     <source>${project.build.jdk}</source>
                     <target>${project.build.jdk}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <compilerArguments>            
+                       <extdirs>src\main\webapp\WEB-INF\lib</extdirs> <!-- 解决自己导入的包不被maven识别的问题 -->
+                    </compilerArguments>
                 </configuration>
             </plugin>
 
@@ -42,7 +45,11 @@
                 </configuration>
             </plugin>
 		</plugins>
-		<resources>  
+		<resources>
+			<resource>  
+                <directory>src/main/resources</directory>  
+            </resource>   
+            
             <resource>  
                 <directory>src/main/java</directory>  
                 <includes>  

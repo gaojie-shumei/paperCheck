@@ -53,7 +53,7 @@ public class ExtractTxt {
 			return article;
 		}
 		/**
-		 * 提取出文档中的文本内容
+		 * 提取出文档中的文本内容,适用文件类型txt，doc，docx，pdf
 		 * 
 		 * @return String
 		 * @throws Exception
@@ -88,7 +88,14 @@ public class ExtractTxt {
 			try {
 				text = parseFile(filepath);
 			}catch(Exception e){
-				text = new Tika().parseToString(new File(filepath));
+				try {
+					Tika tika = new Tika();
+					tika.setMaxStringLength(999999999);
+					text = tika.parseToString(new File(filepath));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			return text;
 //			 InputStreamReader reader=new InputStreamReader(new
@@ -125,9 +132,18 @@ public class ExtractTxt {
 				result = stripper.getText(doc);
 
 			} catch (Exception e) {
-//				e.printStackTrace();
-//				throw e;
-				result = parseFile(filepath);
+				try {
+					result = parseFile(filepath);
+				} catch (Exception e1) {
+					try {
+						Tika tika = new Tika();
+						tika.setMaxStringLength(999999999);
+						result = tika.parseToString(new File(filepath));
+					} catch (Exception e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+				}
 			} finally {
 				if (doc != null) {
 					try {
@@ -149,7 +165,14 @@ public class ExtractTxt {
 			try {
 				text = parseFile(filepath);
 			}catch(Exception e){
-				text = new Tika().parseToString(new File(filepath));
+				try {
+					Tika tika = new Tika();
+					tika.setMaxStringLength(999999999);
+					text = tika.parseToString(new File(filepath));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			return text;
 		}
@@ -171,7 +194,7 @@ public class ExtractTxt {
 //					System.out.println(name + ":" + metadata.get(name));
 //				}
 //				System.out.println(handler.toString());
-				System.out.println();
+//				System.out.println();
 				return handler.toString();
 			} catch (Exception e) {
 				e.printStackTrace();
