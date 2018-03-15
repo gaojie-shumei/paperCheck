@@ -55,11 +55,11 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 	private List<XsPaper> xsPapers;
 	private String papertitle;
 
-	private static String locallipath = FileUtil.getPath() + "Template\\local-li.html";
-	private static String networklipath = FileUtil.getPath() + "Template\\network-li.html";
-	private static String sentencepath = FileUtil.getPath() + "Template\\similarbox.html";
-	private static String pdfpath = FileUtil.getPath() + "Template\\pdf.html";
-	private static String indexpath = FileUtil.getPath() + "Template\\index.html";
+	private static String locallipath = FileUtil.getPath() + "Template/local-li.html";
+	private static String networklipath = FileUtil.getPath() + "Template/network-li.html";
+	private static String sentencepath = FileUtil.getPath() + "Template/similarbox.html";
+	private static String pdfpath = FileUtil.getPath() + "Template/pdf.html";
+	private static String indexpath = FileUtil.getPath() + "Template/index.html";
 	private static String savepath;
 	private static Document indexdoc = null;
 	private static Document pdfdoc = null;

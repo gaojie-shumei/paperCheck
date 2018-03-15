@@ -3,6 +3,7 @@ package com.csuweb.PaperCheck.web.model;
 import java.io.Serializable;
 import java.util.Date;
 
+
 public class User implements Serializable{
     private String id;
 
@@ -76,8 +77,8 @@ public class User implements Serializable{
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
+    public void setBirthdate(Date Date) {
+        this.birthdate = Date;
     }
 
     public String getSex() {

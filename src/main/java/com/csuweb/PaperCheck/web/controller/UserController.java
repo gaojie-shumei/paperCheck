@@ -145,7 +145,7 @@ public class UserController {
 			json.put("id", user.getId());
 			json.put("username", user.getUsername());
 			json.put("userimage", user.getUserimage());
-			json.put("birthdate", user.getBirthdate()==null?user.getBirthdate():user.getBirthdate().toLocaleString().split(" ")[0]);
+			json.put("birthdate", user.getBirthdate()==null?user.getBirthdate():(user.getBirthdate().getYear()+1900)+"-"+((user.getBirthdate().getMonth()+1)<10?("0"+(user.getBirthdate().getMonth()+1)):(user.getBirthdate().getMonth()+1))+"-"+(user.getBirthdate().getDate()<10?("0"+user.getBirthdate().getDate()):user.getBirthdate().getDate()));
 			json.put("sex", user.getSex());
 			json.put("tel", user.getTel());
 			json.put("qq", user.getQq());

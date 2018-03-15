@@ -3,6 +3,7 @@ package com.csuweb.PaperCheck.web.controller;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -164,7 +165,7 @@ public class CheckDocController {
 				JSONObject json = new JSONObject();
 				json.put("title",checkdoc.getTitle());
 				json.put("state", checkdoc.getState().equals(GlobalConfig.getReportEnd())?"检测完成":checkdoc.getState().contains("Wrong")?"检测失败":"检测中");
-				json.put("checktime", checkdoc.getTimestamp().toLocaleString());
+				json.put("checktime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(checkdoc.getTimestamp()));
 				json.put("xsl", checkdoc.getState().equals(GlobalConfig.getReportEnd())?checkdoc.getXsl()+"%":"");
 				json.put("downloadPath", checkdoc.getPath());
 				json.put("usefullife", checkdoc.getState().equals(GlobalConfig.getReportEnd())?(usefullife<=15?"15天":"已失效"):"");
@@ -185,7 +186,7 @@ public class CheckDocController {
 			long usefullife = (new Date().getTime()-checkdoc.getTimestamp().getTime())/(1000*60*60*24);
 			json.put("title",checkdoc.getTitle());
 			json.put("state", checkdoc.getState().equals(GlobalConfig.getReportEnd())?"检测完成":checkdoc.getState().contains("Wrong")?"检测失败":"检测中");
-			json.put("checktime", checkdoc.getTimestamp().toLocaleString());
+			json.put("checktime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(checkdoc.getTimestamp()));
 			json.put("xsl", checkdoc.getState().equals(GlobalConfig.getReportEnd())?checkdoc.getXsl()+"%":"");
 			json.put("downloadPath", checkdoc.getPath());
 			json.put("usefullife", checkdoc.getState().equals(GlobalConfig.getReportEnd())?(usefullife<=15?"15天":"已失效"):"");

@@ -104,7 +104,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	           				</div>
            				</shiro:hasPermission>
            				
-           				<shiro:hasAnyRoles name="管理员,超级管理员,super,manager,super manager,supermanager,Super,Manager,Super Manager,super Manager,Super manager,SuperManager,superManager,Supermanager,admin,Admin,administrator,Administrator">
 	           				<shiro:hasPermission name="role:select">
 		           				<div class="menu_listitem">
 		               				<a href="./resource/page/index/rolelist" class="" data-log="{'type':'rolemanager'}">
@@ -112,7 +111,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		               				</a>
 		           				</div>
 	           				</shiro:hasPermission>
-           				</shiro:hasAnyRoles>
     				</div>
    				</div>
    				<!-- left menu end -->

@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
@@ -108,6 +109,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <script type="text/javascript" src="static/js/commonjs/commonUploadFiles.js"></script>
 <script type="text/javascript" src="static/js/jquery.datetimepicker.full.js"></script>
 <script type="text/javascript" src="static/js/personalinfojs/personalinfo.js"></script>
+
 <script type="text/javascript">
 	$(function(){
 		loadPersonalInfo();
@@ -122,7 +124,17 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		}
 		$("#username").val("${sessionScope.user.username}");
 		$("input[name='sex'][value='${sessionScope.user.sex}']").prop("checked",true);
-		$("#birthdate").val("${sessionScope.user.birthdate.toLocaleString().split(" ")[0]}");
+		var birthdate = "${sessionScope.user.birthdate}";
+		var birthdateStr = "";
+		if(birthdate!=null&&birthdate!=""){
+			var year = "${sessionScope.user.birthdate.getYear()}";
+			var month = "${sessionScope.user.birthdate.getMonth()}";
+			var day = "${sessionScope.user.birthdate.getDate()}";
+			year = parseInt(year)+1900;
+			month = parseInt(month)+1;
+			birthdateStr = year +"-"+(month<10?("0"+month):month)+"-"+(day<10?("0"+day):day);
+		}
+		$("#birthdate").val(birthdateStr);
 		$("#tel").val("${sessionScope.user.tel}");
 		$("#qq").val("${sessionScope.user.qq}");
 		$("#email").val("${sessionScope.user.email}");

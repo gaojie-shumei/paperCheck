@@ -24,18 +24,6 @@ import com.csuweb.PaperCheck.web.model.User;
 import com.csuweb.PaperCheck.web.service.ComputeService;
 import com.csuweb.PaperCheck.web.service.GenerateReportService;
 
-//import com.nesei.xmccCheck.bean.ArticleInfo;
-//import com.nesei.xmccCheck.bean.XsPaper;
-//import com.nesei.xmccCheck.common.ParagraphAndSentenceAnalyzer;
-//import com.nesei.xmccCheck.conf.GlobalConfig;
-//import com.nesei.xmccCheck.model.CheckDocWithBLOBs;
-//import com.nesei.xmccCheck.service.CheckDocService;
-//import com.nesei.xmccCheck.service.ComputeService;
-//import com.nesei.xmccCheck.service.GenerateReportService;
-//import com.nesei.xmccCheck.util.CommonUtil;
-//import com.nesei.xmccCheck.util.ESUtils;
-//import com.nesei.xmccCheck.util.JsonUtil;
-//import com.nesei.xmccCheck.util.XMLUtil;
 
 @Component
 public class ComputePool {

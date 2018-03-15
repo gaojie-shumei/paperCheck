@@ -1,47 +1,13 @@
 var usertable = mydataTable("#usershow");
 $(function(){
-	getAllowedUser();
+	getAllowedUser();//在对应的页面中
 //	$("#adduser").click(function(){
 //		//跳转到添加用户界面
 //		$("#right_content_main").load("./resource/page/adduser");
 //	});
 });
 
-function getAllowedUser(){
-	usertable.destroy();
-	$("#usershow").children("tbody").html("");
-	usertable = mydataTable("#usershow");
-	$.ajax({
-		type:"post",
-		url:"resource/user/selAllowedUser",
-		dataType:"json",
-		success:function(data){
-			if(data!=null&&data!=""){
-				$.each(data,function(i,n){
-					usertable.row.add([
-					      "<div id="+n.id+" style='width:240px;text-align:center;margin:0 auto;'>"+n.loginname+"</div>",
-					      "<div style='width:120px;text-align:center;margin:0 auto;'>"+n.rolename+"</div>",
-					      "<shiro:hasPermission name='user:update'><a href='javascript:void(0)' class='btn btn-info upuser' style='color:white;'>修改</a></shiro:hasPermission>&nbsp;&nbsp;"+
-						  "<shiro:hasPermission name='user:delete'><a href='javascript:void(0)' class='btn btn-warning deluser' style='color:white;'>删除</a></shiro:hasPermission>"
-					]);
-				});
-				
-			}
-			$(".upuser").click(function(){
-				upuser(this);
-			});
-			$(".deluser").off("click");
-			$(".deluser").click(function(){
-				deluser(this);
-			});
-			usertable.draw(false);
-			
-		},
-		error:function(){
-			swal("","系统异常，请稍后再试！","error");
-		}
-	});
-}
+
 
 
 function upuser(object){

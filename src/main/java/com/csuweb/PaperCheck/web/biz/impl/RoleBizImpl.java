@@ -1,5 +1,6 @@
 package com.csuweb.PaperCheck.web.biz.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,14 +28,27 @@ public class RoleBizImpl implements RoleBiz {
 	public List<Role> selAllowedRole(String permissionids) {
 		//System.out.println(permissionids);
 		List<Role> list= rolemapper.selAllRole();
+		List<Role> rolelist = new ArrayList<Role>();
 		if(list!=null&&list.size()>0){
 			for (int i = 0; i < list.size(); i++) {
-				if(list.get(i).getPermissionids()!=null&&!permissionids.contains(list.get(i).getPermissionids())){
-					list.remove(list.get(i));
+				boolean reset = false;
+				if(list.get(i).getPermissionids()!=null){
+					String[] rolePermissionidarr = list.get(i).getPermissionids().split(",");
+					for (String s : rolePermissionidarr) {
+						if(!permissionids.contains(s)){
+							//list.remove(list.get(i));
+							reset = true;
+							break;
+						}
+					}
+					
+				}
+				if(!reset){
+					rolelist.add(list.get(i));
 				}
 			}
 		}
-		return list;
+		return rolelist;
 	}
 	@Override
 	public int addRole(Role role) {

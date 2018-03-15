@@ -14,28 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/page")
 public class PageController {
-	
-	static List<String> roleList = new ArrayList<>();
-	static{
-		roleList.add("管理员");
-		roleList.add("超级管理员");
-		roleList.add("super");
-		roleList.add("manager");
-		roleList.add("super manager");
-		roleList.add("supermanager");
-		roleList.add("Super");
-		roleList.add("Manager");
-		roleList.add("Super Manager");
-		roleList.add("super Manager");
-		roleList.add("Super manager");
-		roleList.add("SuperManager");
-		roleList.add("superManager");
-		roleList.add("Supermanager");
-		roleList.add("admin");
-		roleList.add("Admin");
-		roleList.add("administrator");
-		roleList.add("Administrator");
-	}
 	@RequestMapping("/login")
 	public String login(){
 		return "login";
@@ -93,20 +71,7 @@ public class PageController {
 	@RequiresPermissions(value = {"role:select" })
 	@RequestMapping("/rolelist")
 	public String rolelist(){
-		boolean state = false;
-		Subject subject = SecurityUtils.getSubject();
-		boolean[] hasRoles = subject.hasRoles(roleList);
-		for (boolean b : hasRoles) {
-			if(b==true){
-				state = true;
-				break;
-			}
-		}
-		if(state==true){
 			return "rolelist";
-		}else{
-			return "401";
-		}
 	}
 	
 	@RequiresPermissions(value = {"permission:set" })
