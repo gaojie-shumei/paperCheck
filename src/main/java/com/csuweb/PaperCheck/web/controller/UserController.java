@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.csuweb.PaperCheck.web.biz.PermissionBiz;
 import com.csuweb.PaperCheck.web.biz.RoleBiz;
 import com.csuweb.PaperCheck.web.biz.UserBiz;
+import com.csuweb.PaperCheck.web.model.Permission;
 import com.csuweb.PaperCheck.web.model.Role;
 import com.csuweb.PaperCheck.web.model.User;
 
@@ -63,7 +64,20 @@ public class UserController {
 				}
 			}
 			subject.login(new UsernamePasswordToken(user.getLoginname(), user.getPwd()));
-			request.getSession().setAttribute("user", userbiz.authentication(user));
+			User user1 = userbiz.authentication(user);
+			Role currentRole = rolebiz.selRoleByPrimaryKey(user1.getRoleid());
+			String permission = "";
+			if(currentRole!=null&&currentRole.getPermissionids()!=null&&!"".equals(currentRole.getPermissionids())){
+				String[] permissionidarr = currentRole.getPermissionids().split(",");
+				for (String s : permissionidarr) {
+					Permission p = permissionbiz.selPermissionByPrimaryKey(s);
+					if(p!=null){
+						permission += p.getPermissionevent()+",";
+					}
+				}
+			}
+			request.getSession().setAttribute("user", user1);
+			request.getSession().setAttribute("permission", permission);
 		} catch (AuthenticationException e) {
 			model.addAttribute("error", e.getMessage());
 			model.addAttribute("user",user);
@@ -85,6 +99,8 @@ public class UserController {
     public String logout(HttpSession session,HttpServletRequest request) {
         session.removeAttribute("user");
         request.getSession().removeAttribute("user");
+        session.removeAttribute("permission");
+        request.getSession().removeAttribute("permission");
         // 登出操作
         Subject subject = SecurityUtils.getSubject();
         subject.logout();

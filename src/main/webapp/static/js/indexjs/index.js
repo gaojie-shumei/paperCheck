@@ -8,7 +8,7 @@ $(function(){
 	var url = document.URL;
 	if(url.search("/page/index")!=-1&&url.search("/page/index/")==-1){
 		$("#right_content_main").load("./resource/page/checkpaper");
-	}else{
+	}else if(url.search("/page/index/")!=-1){
 		$("#right_content_main").load("./resource/page/"+url.substr(url.indexOf("/page/index/")+12));
 	}
 });

@@ -7,6 +7,103 @@ $(function(){
 });
 
 
+function getAllowedRole(){
+	roletable.destroy();
+	$("#roleshow").children("tbody").html("");
+	roletable = mydataTable("#roleshow");
+	$.ajax({
+		type:"post",
+		url:"resource/role/selAllowedRole",
+		dataType:"json",
+		success:function(data){
+			var str = "";
+			if(permission.search("permission:set")!=-1){
+			      str = str +"<shiro:hasPermission name='permission:set'><a href='javascript:void(0)' class='btn btn-info setpermission' style='color:white;'>设置权限</a></shiro:hasPermission>&nbsp;&nbsp;";
+			}
+			
+			if(permission.search("role:update")!=-1){
+			      str = str +"<shiro:hasPermission name='role:update'><a href='javascript:void(0)' class='btn btn-info uprole' style='color:white;'>修改</a></shiro:hasPermission>&nbsp;&nbsp;";
+			}
+			
+			if(permission.search("role:delete")!=-1){
+			      str = str +"<shiro:hasPermission name='role:delete'><a href='javascript:void(0)' class='btn btn-warning delrole' style='color:white;'>删除</a></shiro:hasPermission>";
+			}
+			if(data!=null&&data!=""){
+				$.each(data,function(i,n){
+					roletable.row.add([
+					      "<div id="+n.id+" style='width:240px;text-align:center;margin:0 auto;'>"+n.rolename+"</div>",
+					      str
+					]);
+					$("#roleshow tbody").children("tr:eq("+(i+1)+")").prop("name","existrole");
+				});
+			}
+			$(".uprole").off("click");
+			$(".uprole").click(function(){
+				uprole(this);
+			});
+			$(".delrole").off("click");
+			$(".delrole").click(function(){
+				delrole(this);
+			});
+			$(".setpermission").off("click");
+			$(".setpermission").click(function(){
+				//跳转到设置权限页面
+				window.location.href = "./resource/page/index/setpermission?roleid="+$(this).parents("tr").children("td:eq(0)").find("div").prop("id");
+			});
+			roletable.draw(false);
+		},
+		error:function(){
+			swal("","系统异常，请稍后再试！","error");
+		}
+	});
+}
+
+function addrole(object){
+	if($(object).val()=="添加角色"){
+		$(object).val("取消添加");
+		
+		var str = "";
+		if(permission.search("permission:set")!=-1){
+		      str = str +"<shiro:hasPermission name='permission:set'><a href='javascript:void(0)' class='btn btn-info setpermission' style='color:white;display:none;'>设置权限</a></shiro:hasPermission>&nbsp;&nbsp;";
+		}
+		
+		if(permission.search("role:update")!=-1){
+		      str = str +"<shiro:hasPermission name='role:update'><a href='javascript:void(0)' class='btn btn-info uprole' style='color:white;'>完成</a></shiro:hasPermission>&nbsp;&nbsp;";
+		}
+		
+		if(permission.search("role:delete")!=-1){
+		      str = str +"<shiro:hasPermission name='role:delete'><a href='javascript:void(0)' class='btn btn-warning delrole' style='color:white;display:none;'>删除</a></shiro:hasPermission>";
+		}
+		
+		roletable.row.add([
+		      "<input id='-1'>",
+		      str
+		]);
+		
+		$(".uprole").off("click");
+		$(".uprole").click(function(){
+			uprole(this);
+		});
+		$(".delrole").off("click");
+		$(".delrole").click(function(){
+			delrole(this);
+		});
+		$(".setpermission").off("click");
+		$(".setpermission").click(function(){
+			//跳转到设置权限页面
+			window.location.href = "./resource/page/index/setpermission?roleid="+$(this).parents("tr").children("td:eq(0)").find("div").prop("id");
+		});
+		roletable.draw(false);
+	}else{
+		$(object).val("添加角色");
+		roletable.destroy();
+		var trobj = $("#roleshow tbody").children("tr[name!='existrole']");
+		roletable = mydataTable("#roleshow");
+		roletable.row(trobj).remove().draw(false);
+	}
+	
+}
+
 
 
 function uprole(object){
