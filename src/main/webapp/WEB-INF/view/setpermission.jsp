@@ -79,6 +79,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     	<script type="text/javascript" src="static/js/sweet-alert.min.js"></script>
     	<script type="text/javascript" src="static/js/jquery-1.8.0.js" ></script>
     	<script type="text/javascript" src="static/js/zTree/jquery.ztree.all-3.5.min.js"></script>
+    	<script type="text/javascript" src="static/js/security_url_js/security_url.js"></script>
     	<script type="text/javascript" src="static/js/setpermissionjs/setpermission.js"></script>
 </body>
 </html>

@@ -58,6 +58,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     	<!-- <script type="text/javascript" src="static/js/jquery.form.js" ></script> -->
     	<script type="text/javascript" src="static/js/bootstrap.min.js" ></script>
     	<script type="text/javascript" src="static/js/sweet-alert.min.js"></script>
+    	<script type="text/javascript" src="static/js/security_url_js/security_url.js"></script>
     	<script type="text/javascript">
 	    	var permission = "${sessionScope.permission}";
     	</script>

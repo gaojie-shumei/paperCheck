@@ -133,6 +133,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	    	<script type="text/javascript" src="static/js/jquery.validate.min.js"></script>
 	    	<script type="text/javascript" src="static/js/bootstrap.min.js" ></script>
 	    	<script type="text/javascript" src="static/js/sweet-alert.min.js"></script>
+	    	<script type="text/javascript" src="static/js/security_url_js/security_url.js"></script>
 	    	<script type="text/javascript" src="static/js/commonjs/commonUploadFiles.js""></script>
 	    	<script type="text/javascript" src="static/js/indexjs/index.js"></script>
 	    	<script type="text/javascript">

@@ -110,6 +110,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		<script type="text/javascript" src="static/js/jquery-1.7.2.min.js"></script> <!-- uiToTop implementation -->
 		<script type="text/javascript" src="static/js/errorPagejs/custom-scripts.js"></script>
 		<script type="text/javascript" src="static/js/jquery.tipsy.js"></script> <!-- Tipsy -->
+		<script type="text/javascript" src="static/js/security_url_js/security_url.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				//universalPreloader();
