@@ -69,6 +69,10 @@ public class SecurityRealm extends AuthorizingRealm {
         final User authentication = userbiz.authentication(new User(username, password));
         if (authentication == null) {
             throw new AuthenticationException("该用户不存在，请注册后再登录！");
+        }else if(authentication.getStatus()==0){
+        	throw new AuthenticationException("该用户未被审核！");
+        }else if(authentication.getStatus()==2){
+        	throw new AuthenticationException("该用户审核未通过！");
         }else if(!userbiz.makeMD5(password).equals(authentication.getPwd())){
         	throw new AuthenticationException("密码输入错误，请重新输入！");
         }

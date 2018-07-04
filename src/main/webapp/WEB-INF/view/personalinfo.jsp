@@ -22,6 +22,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="static/css/bootstrap-theme.min.css" />
         <link rel="stylesheet" type="text/css" href="static/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="static/css/select2.min.css" />
         <link rel="stylesheet" type="text/css" href="static/css/personalinfocss/personalinfo.css" />
         <link rel="stylesheet" type="text/css" href="static/css/jquery.datetimepicker.css" />
         
@@ -83,6 +84,21 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                               <td align="right"><label>邮箱:&nbsp;</label></td>
                               <td><input id="email" name="email" class="form-control"  readonly="readonly"/></td>
                             </tr>
+                            <tr role="row">
+                              <td align="right"><label>称呼:&nbsp;</label></td>
+                              <td align="center"><input id="callname" name="callname" class="form-control"  readonly="readonly" />
+                              	  <select id="callnameselect" class="callnameselect" style="display:none;width:200px;">
+                              	  	<option selected="selected" value="请选择">请选择</option>
+                              	  	<option value="先生">先生</option>
+                              	  	<option value="女士">女士</option>
+                              	  	<option value="教授">教授</option>
+                              	  	<option value="老师">老师</option>
+                              	  	<option value="其他">其他</option>
+                              	  </select>
+                              </td>
+                              <td align="right"><label>工作单位:&nbsp;</label></td>
+                              <td><input id="organization" name="organization" class="form-control"  readonly="readonly"/></td>
+                            </tr>
                           </table>
                           <div align="center">
                           	<input id="updateinfo" class="btn btn-info" value="修改" type="button">&nbsp;&nbsp;
@@ -106,6 +122,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <script type="text/javascript" src="static/js/jquery.js" ></script>
 <script type="text/javascript" src="static/js/bootstrap.min.js" ></script>
 <script type="text/javascript" src="static/js/sweet-alert.min.js"></script>
+<script type="text/javascript" src="static/js/select2.full.min.js"></script>
 <script type="text/javascript" src="static/js/security_url_js/security_url.js"></script>
 <script type="text/javascript" src="static/js/commonjs/commonUploadFiles.js"></script>
 <script type="text/javascript" src="static/js/jquery.datetimepicker.full.js"></script>
@@ -139,6 +156,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		$("#tel").val("${sessionScope.user.tel}");
 		$("#qq").val("${sessionScope.user.qq}");
 		$("#email").val("${sessionScope.user.email}");
+		$("#callname").val("${sessionScope.user.callname}");
+		$("#organization").val("${sessionScope.user.organization}");
 	}
 	
 	function seccessFunction(filename){

@@ -4,28 +4,31 @@
   <resultMap id="BaseResultMap" type="com.csuweb.PaperCheck.web.model.User" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="callname" property="callname" jdbcType="VARCHAR" />
     <result column="userimage" property="userimage" jdbcType="VARCHAR" />
     <result column="birthdate" property="birthdate" jdbcType="DATE" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="tel" property="tel" jdbcType="VARCHAR" />
     <result column="qq" property="qq" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="organization" property="organization" jdbcType="VARCHAR" />
     <result column="loginname" property="loginname" jdbcType="VARCHAR" />
     <result column="pwd" property="pwd" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="loginstate" property="loginstate" jdbcType="VARCHAR" />
     <result column="roleid" property="roleid" jdbcType="VARCHAR" />
     <result column="qqopenid" property="qqopenid" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, userimage, birthdate, sex, tel, qq, email, loginname, pwd, createtime, 
-    loginstate, roleid, qqopenid
+    id, username, callname, userimage, birthdate, sex, tel, qq, email, organization, 
+    loginname, pwd, createtime, loginstate, roleid, qqopenid, status
   </sql>
   
   <select id="selectCountUserByRoleId" resultType="java.lang.Integer" parameterType="java.lang.String" >
     select count(*)
     from user
-    where roleid = #{roleid,jdbcType=VARCHAR}
+    where roleid = #{roleid,jdbcType=VARCHAR} and status=1
   </select>
   
   <select id="authentication" resultMap="BaseResultMap" parameterType="com.csuweb.PaperCheck.web.model.User" >
@@ -39,7 +42,7 @@
     select 
     <include refid="Base_Column_List" />
     from user
-    where roleid is null or 
+    where status=1 and roleid is null or 
     roleid in
     <foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
  	 #{item}  
@@ -57,16 +60,18 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.csuweb.PaperCheck.web.model.User" >
-    insert into user (id, username, userimage, 
-      birthdate, sex, tel, qq, 
-      email, loginname, pwd, 
-      createtime, loginstate, roleid, 
-      qqopenid)
-    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{userimage,jdbcType=VARCHAR}, 
-      #{birthdate,jdbcType=DATE}, #{sex,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{loginstate,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}, 
-      #{qqopenid,jdbcType=VARCHAR})
+    insert into user (id, username, callname, 
+      userimage, birthdate, sex, 
+      tel, qq, email, organization, 
+      loginname, pwd, createtime, 
+      loginstate, roleid, qqopenid, 
+      status)
+    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{callname,jdbcType=VARCHAR}, 
+      #{userimage,jdbcType=VARCHAR}, #{birthdate,jdbcType=DATE}, #{sex,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{organization,jdbcType=VARCHAR}, 
+      #{loginname,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{loginstate,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}, #{qqopenid,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.csuweb.PaperCheck.web.model.User" >
     insert into user
@@ -76,6 +81,9 @@
       </if>
       <if test="username != null" >
         username,
+      </if>
+      <if test="callname != null" >
+        callname,
       </if>
       <if test="userimage != null" >
         userimage,
@@ -95,6 +103,9 @@
       <if test="email != null" >
         email,
       </if>
+      <if test="organization != null" >
+        organization,
+      </if>
       <if test="loginname != null" >
         loginname,
       </if>
@@ -113,6 +124,9 @@
       <if test="qqopenid != null" >
         qqopenid,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -120,6 +134,9 @@
       </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="callname != null" >
+        #{callname,jdbcType=VARCHAR},
       </if>
       <if test="userimage != null" >
         #{userimage,jdbcType=VARCHAR},
@@ -139,6 +156,9 @@
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
       </if>
+      <if test="organization != null" >
+        #{organization,jdbcType=VARCHAR},
+      </if>
       <if test="loginname != null" >
         #{loginname,jdbcType=VARCHAR},
       </if>
@@ -157,6 +177,9 @@
       <if test="qqopenid != null" >
         #{qqopenid,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.csuweb.PaperCheck.web.model.User" >
@@ -164,6 +187,9 @@
     <set >
       <if test="username != null" >
         username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="callname != null" >
+        callname = #{callname,jdbcType=VARCHAR},
       </if>
       <if test="userimage != null" >
         userimage = #{userimage,jdbcType=VARCHAR},
@@ -183,6 +209,9 @@
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
       </if>
+      <if test="organization != null" >
+        organization = #{organization,jdbcType=VARCHAR},
+      </if>
       <if test="loginname != null" >
         loginname = #{loginname,jdbcType=VARCHAR},
       </if>
@@ -201,31 +230,30 @@
       <if test="qqopenid != null" >
         qqopenid = #{qqopenid,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  
-  <update id="updateBydeleteRoleId" parameterType="com.csuweb.PaperCheck.web.model.User" >
-    update user
-    set roleid = null
-    where roleid = #{roleid,jdbcType=VARCHAR}
-  </update>
-  
   <update id="updateByPrimaryKey" parameterType="com.csuweb.PaperCheck.web.model.User" >
     update user
     set username = #{username,jdbcType=VARCHAR},
+      callname = #{callname,jdbcType=VARCHAR},
       userimage = #{userimage,jdbcType=VARCHAR},
       birthdate = #{birthdate,jdbcType=DATE},
       sex = #{sex,jdbcType=VARCHAR},
       tel = #{tel,jdbcType=VARCHAR},
       qq = #{qq,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
+      organization = #{organization,jdbcType=VARCHAR},
       loginname = #{loginname,jdbcType=VARCHAR},
       pwd = #{pwd,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       loginstate = #{loginstate,jdbcType=VARCHAR},
       roleid = #{roleid,jdbcType=VARCHAR},
-      qqopenid = #{qqopenid,jdbcType=VARCHAR}
+      qqopenid = #{qqopenid,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

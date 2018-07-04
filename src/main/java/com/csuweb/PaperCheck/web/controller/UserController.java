@@ -44,7 +44,10 @@ public class UserController {
 	private PermissionBiz permissionbiz;
 	
 	@RequestMapping(value = "/login",method=RequestMethod.POST)
-	public String login(Model model,HttpServletRequest request){
+	public @ResponseBody JSONObject login(Model model,HttpServletRequest request){
+		
+		JSONObject json = new JSONObject();
+		
 		String loginname = request.getParameter("username");
 		String pwd = request.getParameter("password");
 		User user = new User(loginname,pwd);
@@ -56,11 +59,12 @@ public class UserController {
 				if(u.getLoginname().equals(user.getLoginname())&&u.getPwd().equals(userbiz.makeMD5(user.getPwd()))){
 					//判断对象是否已经登录过，登录过直接跳转到首页
 					if(subject.isAuthenticated()){
-						return "redirect:/resource/page/index";
+						json.put("error", "");
 					}
 				}else{
+					json.put("error", "同一个浏览器不允许多个用户登录！");
 					model.addAttribute("error", "同一个浏览器不允许多个用户登录！");
-					return "login";
+					return json;
 				}
 			}
 			subject.login(new UsernamePasswordToken(user.getLoginname(), user.getPwd()));
@@ -81,9 +85,10 @@ public class UserController {
 		} catch (AuthenticationException e) {
 			model.addAttribute("error", e.getMessage());
 			model.addAttribute("user",user);
-            return "login";
+			json.put("error", e.getMessage());
+            return json;
 		}
-		return "redirect:/resource/page/index";
+		return json;
 		
 		
 	}
@@ -111,10 +116,22 @@ public class UserController {
 	public @ResponseBody JSONObject signup(HttpServletRequest request){
 		String loginname = request.getParameter("usernamesignup");
 		String pwd = request.getParameter("passwordsignup");
-		User user = new User(loginname, userbiz.makeMD5(pwd));
-		user.setId(UUID.randomUUID().toString());
-		user.setCreatetime(new Date());
-		int insert_state = userbiz.addUser(user);
+		String confrim_pwd = request.getParameter("passwordsignup_confirm");
+		String username = request.getParameter("namesignup");
+		String tel = request.getParameter("telsignup");
+		String email = request.getParameter("emailsignup");
+		String organization = request.getParameter("organizationsignup");
+		int insert_state = 0;
+		if(pwd.equals(confrim_pwd)){
+			User user = new User(loginname, userbiz.makeMD5(pwd));
+			user.setId(UUID.randomUUID().toString());
+			user.setCreatetime(new Date());
+			user.setUsername(username);
+			user.setEmail(email);
+			user.setTel(tel);
+			user.setOrganization(organization);
+			insert_state = userbiz.addUser(user);
+		}
 		JSONObject json = new JSONObject();
 		if(insert_state==1){
 			json.put("state", "success");
@@ -161,6 +178,9 @@ public class UserController {
 			json.put("id", user.getId());
 			json.put("username", user.getUsername());
 			json.put("userimage", user.getUserimage());
+			json.put("callname", user.getCallname());
+			json.put("organization", user.getOrganization());
+			json.put("status", user.getStatus());
 			json.put("birthdate", user.getBirthdate()==null?user.getBirthdate():(user.getBirthdate().getYear()+1900)+"-"+((user.getBirthdate().getMonth()+1)<10?("0"+(user.getBirthdate().getMonth()+1)):(user.getBirthdate().getMonth()+1))+"-"+(user.getBirthdate().getDate()<10?("0"+user.getBirthdate().getDate()):user.getBirthdate().getDate()));
 			json.put("sex", user.getSex());
 			json.put("tel", user.getTel());
@@ -216,6 +236,8 @@ public class UserController {
 		String tel = request.getParameter("tel");
 		String qq = request.getParameter("qq");
 		String email = request.getParameter("email");
+		String callname = request.getParameter("callname");
+		String organization = request.getParameter("organization");
 		
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");//小写的mm表示的是分钟 
 		
@@ -237,6 +259,8 @@ public class UserController {
 		user.setTel(tel);
 		user.setQq(qq);
 		user.setEmail(email);
+		user.setCallname(callname);
+		user.setOrganization(organization);
 		
 		JSONObject json = new JSONObject();
 		boolean state = true;

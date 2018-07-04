@@ -109,6 +109,12 @@
 	    	</exclusions>
 		</dependency>
 		
+		<!-- dbcp -->
+	<!-- 	<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-dbcp2</artifactId>
+		    <version>2.4.0</version>
+		</dependency> -->
 		<!--commons-lang3 里面有StringUtil-->
 		<dependency>
 			<groupId>org.apache.commons</groupId>

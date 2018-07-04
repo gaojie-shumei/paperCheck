@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csuweb.PaperCheck.web.dao.QAMapper" >
+  <resultMap id="BaseResultMap" type="com.csuweb.PaperCheck.web.model.QA" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="quserid" property="quserid" jdbcType="VARCHAR" />
+    <result column="qimage" property="qimage" jdbcType="VARCHAR" />
+    <result column="auserid" property="auserid" jdbcType="VARCHAR" />
+    <result column="aimage" property="aimage" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.csuweb.PaperCheck.web.model.QAWithBLOBs" extends="BaseResultMap" >
+    <result column="qdescription" property="qdescription" jdbcType="LONGVARCHAR" />
+    <result column="adescription" property="adescription" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, quserid, qimage, auserid, aimage
+  </sql>
+  <sql id="Blob_Column_List" >
+    qdescription, adescription
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from qa
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from qa
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.csuweb.PaperCheck.web.model.QAWithBLOBs" >
+    insert into qa (id, quserid, qimage, 
+      auserid, aimage, qdescription, 
+      adescription)
+    values (#{id,jdbcType=VARCHAR}, #{quserid,jdbcType=VARCHAR}, #{qimage,jdbcType=VARCHAR}, 
+      #{auserid,jdbcType=VARCHAR}, #{aimage,jdbcType=VARCHAR}, #{qdescription,jdbcType=LONGVARCHAR}, 
+      #{adescription,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csuweb.PaperCheck.web.model.QAWithBLOBs" >
+    insert into qa
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="quserid != null" >
+        quserid,
+      </if>
+      <if test="qimage != null" >
+        qimage,
+      </if>
+      <if test="auserid != null" >
+        auserid,
+      </if>
+      <if test="aimage != null" >
+        aimage,
+      </if>
+      <if test="qdescription != null" >
+        qdescription,
+      </if>
+      <if test="adescription != null" >
+        adescription,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="quserid != null" >
+        #{quserid,jdbcType=VARCHAR},
+      </if>
+      <if test="qimage != null" >
+        #{qimage,jdbcType=VARCHAR},
+      </if>
+      <if test="auserid != null" >
+        #{auserid,jdbcType=VARCHAR},
+      </if>
+      <if test="aimage != null" >
+        #{aimage,jdbcType=VARCHAR},
+      </if>
+      <if test="qdescription != null" >
+        #{qdescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adescription != null" >
+        #{adescription,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csuweb.PaperCheck.web.model.QAWithBLOBs" >
+    update qa
+    <set >
+      <if test="quserid != null" >
+        quserid = #{quserid,jdbcType=VARCHAR},
+      </if>
+      <if test="qimage != null" >
+        qimage = #{qimage,jdbcType=VARCHAR},
+      </if>
+      <if test="auserid != null" >
+        auserid = #{auserid,jdbcType=VARCHAR},
+      </if>
+      <if test="aimage != null" >
+        aimage = #{aimage,jdbcType=VARCHAR},
+      </if>
+      <if test="qdescription != null" >
+        qdescription = #{qdescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adescription != null" >
+        adescription = #{adescription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.csuweb.PaperCheck.web.model.QAWithBLOBs" >
+    update qa
+    set quserid = #{quserid,jdbcType=VARCHAR},
+      qimage = #{qimage,jdbcType=VARCHAR},
+      auserid = #{auserid,jdbcType=VARCHAR},
+      aimage = #{aimage,jdbcType=VARCHAR},
+      qdescription = #{qdescription,jdbcType=LONGVARCHAR},
+      adescription = #{adescription,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csuweb.PaperCheck.web.model.QA" >
+    update qa
+    set quserid = #{quserid,jdbcType=VARCHAR},
+      qimage = #{qimage,jdbcType=VARCHAR},
+      auserid = #{auserid,jdbcType=VARCHAR},
+      aimage = #{aimage,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

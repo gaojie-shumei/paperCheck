@@ -61,7 +61,17 @@ function LoginFormValidate(){
 		errorElement:"span",
 		errorClass:"validateerror",
 		submitHandler:function(form){
-			$(form).submit();
+//			$(form).submit();
+			$(form).ajaxSubmit(function(data){
+				if(data.error==""||data.error==null){
+					window.location.href = "./resource/page/index";
+				}else{
+					swal("",data.error,"error").then(function(){
+						window.location.href = "./resource/page/login";
+					});
+					
+				}
+			});
 		}
 	});
 }
@@ -112,7 +122,21 @@ function SignUpFormValidate(){
 				required:true,
 				minlength:6,
 				equalTo:"#passwordsignup"
+			},
+			namesignup:{
+				required:true,
+				minlength:2
+			},
+			organizationsignup:{
+				required:true
+			},
+			telsignup:{
+				required:true
+			},
+			emailsignup:{
+				required:true
 			}
+			
 		},
 //		debug:true,
 		messages:{
@@ -128,6 +152,19 @@ function SignUpFormValidate(){
 				required:"确认密码不能为空",
 				minlength:$.format("确认密码不能小于{0}个字符"),
 				equalTo:"两次输入密码不一致"
+			},
+			namesignup:{
+				required:"必须填写真实姓名",
+				minlength:$.format("真实姓名不能小于{0}个字符")
+			},
+			organizationsignup:{
+				required:"工作单位不能为空"
+			},
+			telsignup:{
+				required:"手机号码不能为空"
+			},
+			emailsignup:{
+				required:"邮箱不能为空"
 			}
 		},
 		errorElement:"span",
@@ -135,8 +172,10 @@ function SignUpFormValidate(){
 		submitHandler:function(form){
 			$(form).ajaxSubmit(function(data){
 				if(data.state=="success"){
-					swal("","注册用户成功！","success");
-					window.location.hash = "#tologin";
+					swal("","已提交请求，待审核！","success").then(function(){
+						window.location.hash = "#tologin";
+					});
+					
 				}
 			});
 		}

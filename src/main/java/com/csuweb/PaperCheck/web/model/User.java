@@ -1,13 +1,13 @@
 package com.csuweb.PaperCheck.web.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
-
-public class User implements Serializable{
+public class User {
     private String id;
 
     private String username;
+
+    private String callname;
 
     private String userimage;
 
@@ -21,6 +21,8 @@ public class User implements Serializable{
 
     private String email;
 
+    private String organization;
+
     private String loginname;
 
     private String pwd;
@@ -32,6 +34,8 @@ public class User implements Serializable{
     private String roleid;
 
     private String qqopenid;
+
+    private Integer status;
     
     public User(){
     	super();
@@ -49,7 +53,7 @@ public class User implements Serializable{
 		this.pwd = pwd;
 	}
 
-	public String getId() {
+    public String getId() {
         return id;
     }
 
@@ -65,6 +69,14 @@ public class User implements Serializable{
         this.username = username == null ? null : username.trim();
     }
 
+    public String getCallname() {
+        return callname;
+    }
+
+    public void setCallname(String callname) {
+        this.callname = callname == null ? null : callname.trim();
+    }
+
     public String getUserimage() {
         return userimage;
     }
@@ -77,8 +89,8 @@ public class User implements Serializable{
         return birthdate;
     }
 
-    public void setBirthdate(Date Date) {
-        this.birthdate = Date;
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
     }
 
     public String getSex() {
@@ -111,6 +123,14 @@ public class User implements Serializable{
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization == null ? null : organization.trim();
     }
 
     public String getLoginname() {
@@ -159,5 +179,13 @@ public class User implements Serializable{
 
     public void setQqopenid(String qqopenid) {
         this.qqopenid = qqopenid == null ? null : qqopenid.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

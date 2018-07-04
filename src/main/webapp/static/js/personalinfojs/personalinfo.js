@@ -59,6 +59,13 @@ function updateinfo(thisobj){
 		$(".setdate").focus(function(){
 			$(this).blur();
 		});
+		$("#callname").hide();
+		$("#callnameselect").show();
+		if($("#callname").val()!=""){
+			$("#callnameselect").children("option[value="+$("#callname").val()+"]").prop("selected","selected");
+			$("#callnameselect").children("option[value!="+$("#callname").val()+"]").prop("selected","");
+		}
+		$("#callnameselect").select2();
 		$("#cancelupdate").show();
 		$("input").prop("readonly",false);
 		$("input").prop("disabled",false);
@@ -78,6 +85,11 @@ function upuser(thisobj){
 	var tel = $("#tel").val();
 	var qq = $("#qq").val();
 	var email = $("#email").val();
+	var callname = $("#callnameselect").children("option:selected").text();
+	if(callname=="请选择"){
+		callname = "";
+	}
+	var organization = $("#organization").val();
 //	alert(userimage);
 //	alert(username);
 //	alert(sex);
@@ -85,6 +97,8 @@ function upuser(thisobj){
 //	alert(tel);
 //	alert(qq);
 //	alert(email);
+//	alert(callname);
+//	alert(organization);
 	if(validateEmailFormat(email)==true){
 		$.ajax({
 			type:"post",
@@ -96,16 +110,21 @@ function upuser(thisobj){
 				birthdate:birthdate,
 				tel:tel,
 				qq:qq,
-				email:email
+				email:email,
+				callname:callname,
+				organization:organization
 			},
 			dataType:"json",
 			success:function(data){
 				if(data.state==true){
-					swal("","修改个人资料成功！","success");
-					window.location.href = "./resource/page/index/personalinfo";
+					swal("","修改个人资料成功！","success").then(function(){
+						window.location.href = "./resource/page/index/personalinfo";
+					});
+					
 				}else{
-					swal("","修改个人资料失败！","error");
-					window.location.href = "./resource/page/index/personalinfo";
+					swal("","修改个人资料失败！","error").then(function(){
+						window.location.href = "./resource/page/index/personalinfo";
+					});
 				}
 			},
 			error:function(){

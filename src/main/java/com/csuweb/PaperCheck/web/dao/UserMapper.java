@@ -2,8 +2,6 @@ package com.csuweb.PaperCheck.web.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.csuweb.PaperCheck.web.model.User;
 
 public interface UserMapper {
@@ -18,8 +16,8 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-
-	User authentication(User user);//通过用户的登录名loginname获取用户数据
+    
+    User authentication(User user);//通过用户的登录名loginname获取用户数据
 
 	List<User> selAllowedUser(String[] roleids);//通过获取到的可操作roleids查询出其权限内可操作的user对象
 

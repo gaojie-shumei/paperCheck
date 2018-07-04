@@ -56,7 +56,8 @@
 	<!-- 加载数据库连接的资源文件 -->
 	<context:property-placeholder location="classpath*:application.properties"/>
 
-	<!-- 为mybatis配置环境,配置连接池dataSource -->
+	<!-- 为mybatis配置环境,配置连接池dataSource --><!--  -->
+	<!-- class = "org.apache.commons.dbcp2.BasicDataSource" destroy-method="close" -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${jdbc.driver}"></property>
