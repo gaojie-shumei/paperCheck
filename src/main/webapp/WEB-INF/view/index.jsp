@@ -95,7 +95,15 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	               				</a>
 	           				</div>
            				</shiro:hasPermission>
-   
+   						
+   						<shiro:hasPermission name="register:check">
+	           				<div class="menu_listitem">
+	               				<a href="./resource/page/index/usercheck" class="" data-log="{'type':'usermanager'}">
+	                   				<span>注册审核</span>
+	               				</a>
+	           				</div>
+           				</shiro:hasPermission>
+   						
            				<shiro:hasPermission name="user:select">
 	           				<div class="menu_listitem">
 	               				<a href="./resource/page/index/userlist" class="" data-log="{'type':'usermanager'}">
@@ -104,13 +112,19 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	           				</div>
            				</shiro:hasPermission>
            				
-	           				<shiro:hasPermission name="role:select">
-		           				<div class="menu_listitem">
-		               				<a href="./resource/page/index/rolelist" class="" data-log="{'type':'rolemanager'}">
-		                   				<span>角色管理</span>
-		               				</a>
-		           				</div>
-	           				</shiro:hasPermission>
+           				<shiro:hasPermission name="role:select">
+	           				<div class="menu_listitem">
+	               				<a href="./resource/page/index/rolelist" class="" data-log="{'type':'rolemanager'}">
+	                   				<span>角色管理</span>
+	               				</a>
+	           				</div>
+           				</shiro:hasPermission>
+	           				
+           				<div class="menu_listitem">
+               				<a href="./resource/page/index/qaback" class="" data-log="{'type':'usermanager'}">
+                   				<span>问题反馈</span>
+               				</a>
+           				</div>
     				</div>
    				</div>
    				<!-- left menu end -->

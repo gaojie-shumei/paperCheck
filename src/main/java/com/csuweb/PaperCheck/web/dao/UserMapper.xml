@@ -49,6 +49,14 @@
  	</foreach>  
   </select>
   
+  <!-- 查询出需要审核的注册用户 -->
+  <select id="selUserCheck" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where status=0
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

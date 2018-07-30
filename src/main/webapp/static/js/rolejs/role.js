@@ -34,9 +34,13 @@ function getAllowedRole(){
 					      "<div id="+n.id+" style='width:240px;text-align:center;margin:0 auto;'>"+n.rolename+"</div>",
 					      str
 					]);
-					$("#roleshow tbody").children("tr:eq("+(i+1)+")").prop("name","existrole");
 				});
 			}
+			roletable.draw(false);
+			roletable.destroy();
+//			alert($("#roleshow tbody"));
+//			alert($("#roleshow tbody").children("tr"));
+//			$("#roleshow tbody").find("tr").prop("name","existrole");
 			$(".uprole").off("click");
 			$(".uprole").click(function(){
 				uprole(this);
@@ -50,7 +54,7 @@ function getAllowedRole(){
 				//跳转到设置权限页面
 				window.location.href = "./resource/page/index/setpermission?roleid="+$(this).parents("tr").children("td:eq(0)").find("div").prop("id");
 			});
-			roletable.draw(false);
+			roletable = mydataTable("#roleshow");
 		},
 		error:function(){
 			swal("","系统异常，请稍后再试！","error");
@@ -76,10 +80,11 @@ function addrole(object){
 		}
 		
 		roletable.row.add([
-		      "<input id='-1'>",
+		      "<input id=-1>",
 		      str
 		]);
-		
+		roletable.draw(false);
+		roletable.destroy();
 		$(".uprole").off("click");
 		$(".uprole").click(function(){
 			uprole(this);
@@ -93,11 +98,12 @@ function addrole(object){
 			//跳转到设置权限页面
 			window.location.href = "./resource/page/index/setpermission?roleid="+$(this).parents("tr").children("td:eq(0)").find("div").prop("id");
 		});
-		roletable.draw(false);
+		roletable = mydataTable("#roleshow");
+		
 	}else{
 		$(object).val("添加角色");
 		roletable.destroy();
-		var trobj = $("#roleshow tbody").children("tr[name!='existrole']");
+		var trobj = $("#roleshow").find("input[id=-1]").parents("tr");
 		roletable = mydataTable("#roleshow");
 		roletable.row(trobj).remove().draw(false);
 	}
@@ -193,15 +199,18 @@ function ajaxUpRole(object){
 				}else{
 					swal("","修改角色成功","success");
 				}
-				roletable.cell(cellobj).data("<div id="+roleid+" style='width:120px;text-align:center;margin:0 auto;'>"+rolename+"</div>");
-				trobj.prop("name","existrole");
+				roletable.cell(cellobj).data("<div id="+data.roleid+" style='width:120px;text-align:center;margin:0 auto;'>"+rolename+"</div>");
 			}else{
 				if(roleid==-1){
-					swal("","添加角色失败","error");
+					swal("","添加角色失败","error").then(function(){
+						getAllowedRole();
+					});
 				}else{
-					swal("","修改角色失败","error");
+					swal("","修改角色失败","error").then(function(){
+						getAllowedRole();
+					});
 				}
-				getAllowedRole();
+				
 			}
 			$(object).text("修改");
 			trobj.find("a[class*='delrole']").text("删除");

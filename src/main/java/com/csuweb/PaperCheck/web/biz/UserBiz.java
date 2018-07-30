@@ -20,4 +20,6 @@ public interface UserBiz {
 	int upUser(User user);//修改密码，完善资料的方法
 
 	int delUser(String userid);//删除用户的方法
+
+	List<User> selUserCheck();
 }

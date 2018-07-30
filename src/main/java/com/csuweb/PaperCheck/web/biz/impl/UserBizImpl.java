@@ -55,7 +55,7 @@ public class UserBizImpl implements UserBiz {
 	@Override
 	public int upUser(User user) {
 		
-		return usermapper.updateByPrimaryKeySelective(user);
+		return usermapper.updateByPrimaryKey(user);
 	}
 
 	@Override
@@ -70,4 +70,9 @@ public class UserBizImpl implements UserBiz {
 		return usermapper.selAllowedUser(roleids.split(","));
 	}
 
+	@Override
+	public List<User> selUserCheck() {
+		// TODO Auto-generated method stub
+		return usermapper.selUserCheck();
+	}
 }

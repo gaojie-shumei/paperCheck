@@ -18,7 +18,7 @@ function getAllowedUser(){
 		success:function(data){
 			var str = "";
 			if(data!=null&&data!=""){
-				
+				str = str + "<a href='javascript:void(0)' class='btn  btn-info userdetail'>用户详情</a>";
 				if(permission.search("user:update")!=-1){
 				      str = str +"<shiro:hasPermission name='user:update'><a href='javascript:void(0)' class='btn btn-info upuser' style='color:white;'>修改</a></shiro:hasPermission>&nbsp;&nbsp;";
 				}
@@ -36,6 +36,9 @@ function getAllowedUser(){
 				});
 				
 			}
+			usertable.draw(false);
+			usertable.destroy();
+			$(".upuser").off("click");
 			$(".upuser").click(function(){
 				upuser(this);
 			});
@@ -43,7 +46,12 @@ function getAllowedUser(){
 			$(".deluser").click(function(){
 				deluser(this);
 			});
-			usertable.draw(false);
+			$(".userdetail").off("click");
+			$(".userdetail").click(function(){
+				userdetail($(this).parents("tr"))
+			})
+			usertable = mydataTable("#usershow");
+			
 			
 		},
 		error:function(){
@@ -52,6 +60,45 @@ function getAllowedUser(){
 	});
 }
 
+function userdetail(rowobj){
+	var loginname = rowobj.children("td:first").children("div").text();
+	$.ajax({
+		type:"post",
+		url:"resource/user/selUser",
+		data:{
+			loginname:loginname
+		},
+		dataType:"json",
+		success:function(data){
+			if(data!=null&&data!=""){
+//				alert(data.userimage);
+//				alert(data.userimage==null);
+//				alert(data.userimage=="null");
+//				alert(data.userimage=="");
+				if(data.userimage==null||data.userimage=="null"||data.userimage==""){
+					$("#userimage1").prop("src","static/images/userimage/defaultUserImage.jpg");
+				}else{
+					$("#userimage1").prop("src",data.userimage);
+				}
+				$("#username").val(data.username);
+				$("input[name='sex'][value="+data.sex+"]").prop("checked",true);
+				$("#birthdate").val(data.birthdate);
+				$("#tel").val(data.tel);
+				$("#qq").val(data.qq);
+				$("#email").val(data.email);
+				$("#callname").val(data.callname);
+				$("#organization").val(data.organization);
+				$('#userdetailmodal').modal({
+					backdrop:false,
+					keyboard:false
+				});
+			}
+		},
+		error:function(){
+			swal("","系统异常，请稍后再试！","error");
+		}
+	});
+}
 
 function upuser(object){
 	var trobj = $(object).parents("tr");

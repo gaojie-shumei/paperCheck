@@ -24,4 +24,6 @@ public interface UserMapper {
 	int updateBydeleteRoleId(String roleid);//在删除某个角色时同时修改user对象的roleid
 	
 	int selectCountUserByRoleId(String roleid);//查询该角色id所对应的用户个数
+
+	List<User> selUserCheck();
 }

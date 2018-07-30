@@ -50,7 +50,7 @@ function getReports(){
 				var trobj = $(this).parents("tr");
 				var guid = trobj.children("td:first").children("div").prop("id");
 				var state = trobj.children("td:eq(2)").text();
-				console.log("flushThis执行啦");
+//				console.log("flushThis执行啦");
 				if(state=="检测中"){
 					getReportByGuid(guid,trobj);
 				}

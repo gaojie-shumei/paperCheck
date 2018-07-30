@@ -80,6 +80,17 @@ public class PageController {
 		return "setpermission";
 	}
 	
+	@RequiresPermissions(value = {"register:check" })
+	@RequestMapping("/usercheck")
+	public String usercheck(){
+		return "usercheck";
+	}
+	
+	@RequestMapping("/qaback")//问题反馈
+	public String qaback(){
+		return "qaback";
+	}
+	
 	@RequestMapping("/personalinfo")
 	public String personalinfo(){
 		return "personalinfo";

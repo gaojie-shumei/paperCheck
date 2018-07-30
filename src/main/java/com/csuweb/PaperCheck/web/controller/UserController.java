@@ -204,14 +204,68 @@ public class UserController {
 			user.setRoleid(null);
 		}
 		User u = userbiz.selUserByPrimaryKey(user.getId());
-		if(user.getRoleid()==null){
-			if(u.getRoleid()!=null){
-				up = userbiz.upUser(user);
+		u.setRoleid(user.getRoleid());
+		up = userbiz.upUser(u);
+//		if(user.getRoleid()==null){
+//			if(u.getRoleid()!=null){
+//				u.setRoleid(user.getRoleid());
+//				up = userbiz.upUser(u);
+//			}
+//		}else{
+//			if(u.getRoleid()==null||!user.getRoleid().equals(u.getRoleid())){
+//				up = userbiz.upUser(user);
+//			}
+//		}
+		if(up!=1){
+			state = false;
+		}
+		json.put("state", state);
+		return json;
+	}
+	
+	@RequestMapping(value = "/selUserCheck",method=RequestMethod.POST)
+	public @ResponseBody JSONArray selUserCheck(HttpServletRequest request){
+		JSONArray json = new JSONArray();
+		List<User> userchecklist = userbiz.selUserCheck();
+		if(userchecklist!=null&&userchecklist.size()>0){
+			for (User user : userchecklist) {
+				JSONObject j = new JSONObject();
+				j.put("id", user.getId());
+				j.put("username", user.getUsername());
+//				if(user.getUserimage()!=null&&!"".equals(user.getUserimage().trim())&&!"null".equals(user.getUserimage().trim())){
+					j.put("userimage", user.getUserimage());
+//				}else{
+//					j.put("userimage", "static/images/userimage/defaultUserImage.jpg");
+//				}
+				j.put("callname", user.getCallname());
+				j.put("organization", user.getOrganization());
+				j.put("status", user.getStatus());
+				j.put("birthdate", user.getBirthdate()==null?user.getBirthdate():(user.getBirthdate().getYear()+1900)+"-"+((user.getBirthdate().getMonth()+1)<10?("0"+(user.getBirthdate().getMonth()+1)):(user.getBirthdate().getMonth()+1))+"-"+(user.getBirthdate().getDate()<10?("0"+user.getBirthdate().getDate()):user.getBirthdate().getDate()));
+				j.put("sex", user.getSex());
+				j.put("tel", user.getTel());
+				j.put("qq", user.getQq());
+				j.put("email", user.getEmail());
+				j.put("loginname", user.getLoginname());
+				j.put("pwd", user.getPwd());
+				j.put("createtime", user.getCreatetime());
+				json.add(j);
 			}
+		}
+		return json;
+	}
+	
+	@RequestMapping(value = "/upUserStatus",method=RequestMethod.POST)
+	public @ResponseBody JSONObject upUserStatus(User user,HttpServletRequest request){//要求要有主键值
+		JSONObject json = new JSONObject();
+		boolean state = true;
+		int up = 1;
+		User u = userbiz.selUserByPrimaryKey(user.getId());
+//		u.setRoleid(user.getRoleid());
+		u.setStatus(user.getStatus());
+		if(user.getStatus()==2){
+			up = userbiz.delUser(user.getId());
 		}else{
-			if(u.getRoleid()==null||!user.getRoleid().equals(u.getRoleid())){
-				up = userbiz.upUser(user);
-			}
+			up = userbiz.upUser(u);
 		}
 		if(up!=1){
 			state = false;

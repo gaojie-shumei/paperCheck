@@ -152,6 +152,7 @@ public class RoleController {
 			state = false;
 		}
 		json.put("state", state);
+		json.put("roleid", role.getId());
 		return json;
 	}
 	
