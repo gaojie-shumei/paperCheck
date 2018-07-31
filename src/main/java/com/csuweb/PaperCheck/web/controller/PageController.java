@@ -86,6 +86,12 @@ public class PageController {
 		return "usercheck";
 	}
 	
+	@RequiresPermissions(value = {"back:response" })
+	@RequestMapping("/qaresponse")
+	public String qaresponse(){
+		return "qaresponse";
+	}
+	
 	@RequestMapping("/qaback")//问题反馈
 	public String qaback(){
 		return "qaback";

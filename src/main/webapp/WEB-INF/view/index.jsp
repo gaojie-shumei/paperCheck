@@ -64,7 +64,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     				<div class="left_menu_logo btn-info">
         				<!-- <a href="resource/page/index"> -->
         					<!-- <img class="sologan onlyOn" src="static/images/defaultIndex.png"> -->
-        					<i class="glyphicon glyphicon-th-list logosim"></i>
+        					<i class="glyphicon glyphicon-th-list logosim"><div id="allremind" style="display:none;float:right;margin-top:-18px;color:red;font-size:20px;">.</div></i>
         				<!-- </a> -->
     				</div>
     				<div class="main_menu_wr">
@@ -98,8 +98,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
    						
    						<shiro:hasPermission name="register:check">
 	           				<div class="menu_listitem">
-	               				<a href="./resource/page/index/usercheck" class="" data-log="{'type':'usermanager'}">
-	                   				<span>注册审核</span>
+	               				<a href="./resource/page/index/usercheck" class="" data-log="{'type':'usercheck'}">
+	                   				<div style="width:57px;">注册审核<div id="usercheckremind" style="display:none;float:right;margin-top:-55px;color:red;font-size:20px;">.</div></div>
 	               				</a>
 	           				</div>
            				</shiro:hasPermission>
@@ -121,10 +121,18 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
            				</shiro:hasPermission>
 	           				
            				<div class="menu_listitem">
-               				<a href="./resource/page/index/qaback" class="" data-log="{'type':'usermanager'}">
-                   				<span>问题反馈</span>
+               				<a href="./resource/page/index/qaback" class="" data-log="{'type':'qaback'}">
+                   				<div style="width:57px;">问题反馈</div>
                				</a>
            				</div>
+           				
+           				<shiro:hasPermission name="back:response">
+	           				<div class="menu_listitem">
+	               				<a href="./resource/page/index/qaresponse" class="" data-log="{'type':'qaresponse'}">
+	                   				<div style="width:57px;">反馈查看<div id="qaresponseremind" style="display:none;float:right;margin-top:-55px;color:red;font-size:20px;">.</div></div>
+	               				</a>
+	           				</div>
+	           			</shiro:hasPermission>
     				</div>
    				</div>
    				<!-- left menu end -->
@@ -151,6 +159,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	    	<script type="text/javascript" src="static/js/commonjs/commonUploadFiles.js""></script>
 	    	<script type="text/javascript" src="static/js/indexjs/index.js"></script>
 	    	<script type="text/javascript">
+	    		var permission = "${sessionScope.permission}";
 	    		$(function(){
 	    			if("${user.userimage}"==""){
 	    				$("#user_pic").prop("src","static/images/userimage/defaultUserImage.jpg");

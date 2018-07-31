@@ -88,5 +88,62 @@ function registerEvent(){
 //		var url = this.href;
 //		$("#right_content_main").load(url);
 //	});
+	setInterval(function(){
+		if(permission.search("register:check")!=-1){
+			usercheckremind();
+		}
+		if(permission.search("back:response")!=-1){
+			qaresponseremind();
+		}
+	},1000);
+	setInterval(function(){
+		allremind();
+	},2000);
+	
+}
+
+
+function allremind(){
+	if($("#usercheckremind").css("display")=="none"&& $("#qaresponseremind").css("display")=="none"){
+		$("#allremind").hide();
+	}else{
+		$("#allremind").show();
+	}
+}
+
+function usercheckremind(){
+	$.ajax({
+		type:"post",
+		url:"resource/user/selUserCheck",
+		dataType:"json",
+		success:function(data){
+			if(data!=null&&data!=""&&!$.isEmptyObject(data)){
+				$("#usercheckremind").show();
+			}else{
+				$("#usercheckremind").hide();
+			}
+		},
+		error:function(){
+			swal("","系统异常，请稍后再试！","error");
+		}
+	});
+}
+
+function qaresponseremind(){
+	$.ajax({
+		type:"post",
+		url:"resource/qa/selQaBack",
+		dataType:"json",
+		success:function(data){
+			if(data!=null&&data!=""&&!$.isEmptyObject(data)){
+				$("#qaresponseremind").show();
+			}else{
+				$("#qaresponseremind").hide();
+			}
+		},
+		error:function(){
+			swal("","系统异常，请稍后再试！","error");
+		}
+	});
 }
 

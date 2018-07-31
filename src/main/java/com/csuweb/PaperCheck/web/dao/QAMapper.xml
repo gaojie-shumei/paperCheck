@@ -26,6 +26,16 @@
     from qa
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  
+  <!-- 查询所有的qa -->
+  <select id="selQaBack" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from qa
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from qa
     where id = #{id,jdbcType=VARCHAR}

@@ -1,5 +1,7 @@
 package com.csuweb.PaperCheck.web.dao;
 
+import java.util.List;
+
 import com.csuweb.PaperCheck.web.model.QA;
 import com.csuweb.PaperCheck.web.model.QAWithBLOBs;
 
@@ -17,4 +19,6 @@ public interface QAMapper {
     int updateByPrimaryKeyWithBLOBs(QAWithBLOBs record);
 
     int updateByPrimaryKey(QA record);
+
+	List<QAWithBLOBs> selQaBack();
 }
