@@ -112,7 +112,8 @@ function SignUpFormValidate(){
 		rules:{
 			usernamesignup:{
 				required:true,
-				usernamesame:true
+				usernamesame:true,
+				maxlength:10
 			},
 			passwordsignup:{
 				required:true,
@@ -134,7 +135,8 @@ function SignUpFormValidate(){
 				required:true
 			},
 			emailsignup:{
-				required:true
+				required:true,
+				email:true
 			}
 			
 		},
@@ -143,6 +145,7 @@ function SignUpFormValidate(){
 			usernamesignup:{
 				required:"用户名不能为空",
 				usernamesame:"该用户名已被注册，请换一个用户名",
+				maxlength:"最大不能超过10个字符"
 			},
 			passwordsignup:{
 				required:"密码不能为空",
@@ -164,7 +167,8 @@ function SignUpFormValidate(){
 				required:"手机号码不能为空"
 			},
 			emailsignup:{
-				required:"邮箱不能为空"
+				required:"邮箱不能为空",
+				email:"必须输入正确格式的邮箱"
 			}
 		},
 		errorElement:"span",

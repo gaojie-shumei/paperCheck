@@ -10,6 +10,7 @@
 package com.csuweb.PaperCheck.web.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +58,7 @@ public class QaController {
 				User quser = userbiz.selUserByPrimaryKey(qa.getQuserid());
 				j.put("qloginname", quser.getLoginname());
 				j.put("qdescription", qa.getQdescription());
-				j.put("qimage", qa.getQimage());
+//				j.put("qimage", qa.getQimage());
 				json.add(j);
 			}
 		}
@@ -65,12 +66,30 @@ public class QaController {
 	}
 	
 	@RequestMapping(value = "/delQaBack",method=RequestMethod.POST)
-	public @ResponseBody JSONObject delUser(HttpServletRequest request){//要求主键值
+	public @ResponseBody JSONObject delQaBack(HttpServletRequest request){//要求主键值
 		String qaid = request.getParameter("qaid");
 		JSONObject json = new JSONObject();
 		boolean state = true;
 		int del = qabiz.delQaBack(qaid);
 		if(del!=1){
+			state = false;
+		}
+		json.put("state", state);
+		return json;
+	}
+	
+	@RequestMapping(value = "/upqa",method=RequestMethod.POST)
+	public @ResponseBody JSONObject upQa(HttpServletRequest request){//要求主键值
+		String qdescription = request.getParameter("qdescription");
+		User user = (User) request.getSession().getAttribute("user");
+		QAWithBLOBs qa = new QAWithBLOBs();
+		qa.setId(UUID.randomUUID().toString());
+		qa.setQdescription(qdescription);
+		qa.setQuserid(user.getId());
+		JSONObject json = new JSONObject();
+		boolean state = true;
+		int up = qabiz.upQa(qa);
+		if(up!=1){
 			state = false;
 		}
 		json.put("state", state);

@@ -126,11 +126,14 @@ function upuser(object){
 			dataType:"json",
 			success:function(data){
 				if(data.state==true){
-					swal("","修改用户成功","success");
-					usertable.cell(cellobj).data("<div style='width:120px;text-align:center;margin:0 auto;'>"+rolename+"</div>");
+					swal("","修改用户成功","success").then(function(){
+						usertable.cell(cellobj).data("<div style='width:120px;text-align:center;margin:0 auto;'>"+rolename+"</div>");
+					});
 				}else{
-					swal("","修改用户失败","error");
-					getAllowedUser();
+					swal("","修改用户失败","error").then(function(){
+						getAllowedUser();
+					});
+					
 				}
 				$(object).text("修改");
 				$(object).next("a").text("删除");
@@ -218,8 +221,9 @@ function deluser(object){
 					success:function(data){
 						if(data!=null&&data!=""){
 							if(data.state==true){
-								swal("","删除用户成功","success");
-								usertable.row(trobj).remove().draw(false);
+								swal("","删除用户成功","success").then(function(){
+									usertable.row(trobj).remove().draw(false);
+								});
 							}else{
 								swal("","删除用户失败","error");
 							}

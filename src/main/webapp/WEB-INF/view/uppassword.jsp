@@ -101,8 +101,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				dataType:"json",
 				success:function(data){
 					if(data.state==true){
-						swal("","修改密码成功，请重新登录！","success");
-						window.location.href = "./resource/user/logout";
+						swal("","修改密码成功，请重新登录！","success").then(function(){
+							window.location.href = "./resource/user/logout";
+						});
+						
 					}else{
 						swal("",data.error,"error");
 					}

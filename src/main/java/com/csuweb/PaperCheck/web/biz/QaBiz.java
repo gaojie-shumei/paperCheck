@@ -28,6 +28,7 @@ public interface QaBiz {
 
 	List<QAWithBLOBs> selQaBack();
 	int delQaBack(String id);
+	int upQa(QAWithBLOBs qa);
 
 }
   

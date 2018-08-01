@@ -253,8 +253,10 @@ function delrole(object){
 					success:function(data){
 						if(data!=null&&data!=""){
 							if(data.state==true){
-								swal("","删除角色成功","success");
-								roletable.row(trobj).remove().draw(false);
+								swal("","删除角色成功","success").then(function(){
+									roletable.row(trobj).remove().draw(false);
+								});
+								
 							}else{
 								swal("","删除角色失败","error");
 							}

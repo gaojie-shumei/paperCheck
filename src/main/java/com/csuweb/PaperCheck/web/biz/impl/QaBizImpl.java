@@ -47,5 +47,11 @@ public class QaBizImpl implements QaBiz {
 		return qamapper.deleteByPrimaryKey(id);
 	}
 
+	@Override
+	public int upQa(QAWithBLOBs qa) {
+		// TODO Auto-generated method stub
+		return qamapper.insertSelective(qa);
+	}
+
 }
   

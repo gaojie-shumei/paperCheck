@@ -166,8 +166,11 @@ function deleterecord(jqueryObject){
 					success:function(data){
 						if(data!=null&&data!=""){
 							if(data.state=="success"){
-								swal("","删除成功","success");
-								reporttable.row(jqueryParentRow).remove().draw(false);
+								swal("","删除成功","success").then(function(){
+									reporttable.row(jqueryParentRow).remove().draw(false);
+								});
+							}else{
+								swal("","删除失败","success");
 							}
 						}
 					},
