@@ -32,6 +32,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                			<div id="papeTitle" style="text-align: center;">
                				<strong style="text-align: center;font-size: 20px;font-weight: 30px;margin-bottom: 20px;">提交文章</strong>
                			</div>
+               			<br/><br/>
                			<form id="upPaperForm" class="form-horizontal" role="form" method="post" action="resource/checkdoc/checkpaper">
                 			<div class="form-group"> 
                                <label for="title" class="col-lg-2 control-label">题目</label>

@@ -62,11 +62,11 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		</style>
 </head>
 <body  class="white-bg">
-	<!-- 普通用户查重界面代码 -->
                		<div id="article_page" class="col-lg-12">
                			<div id="pageTitle" style="text-align: center;">
                				<strong style="text-align: center;font-size: 20px;font-weight: 30px;margin-bottom: 20px;">更新库文档</strong>
                			</div>
+               			<br/><br/>
                			<form id="upArticleForm" class="form-horizontal" role="form" method="post" action="resource/history/bashaddhistory">
                             <!-- 方式start -->
                             <div class="form-group"> 

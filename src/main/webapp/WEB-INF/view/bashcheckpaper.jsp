@@ -67,6 +67,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                			<div id="papeTitle" style="text-align: center;">
                				<strong style="text-align: center;font-size: 20px;font-weight: 30px;margin-bottom: 20px;">批量提交文章</strong>
                			</div>
+               			<br/><br/>
                			<form id="upPaperForm" class="form-horizontal" role="form" method="post" action="resource/checkdoc/bashcheckpaper">
                             <!-- 方式start -->
                             <div class="form-group"> 

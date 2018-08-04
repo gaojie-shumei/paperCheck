@@ -31,6 +31,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	</head>
 <body class="white-bg">
 	<div class="row col-lg-12">
+		<div id="pageTitle" style="text-align: center;">
+			<strong style="text-align: center;font-size: 20px;font-weight: 30px;margin-bottom: 20px;">我的报告</strong>
+		</div>
+		<br/><br/>
 		<table  id="reportshow" class="table  table-striped table-bordered table-hover dataTable table-condensed">
 			<thead>
 				<tr role="row">

@@ -30,6 +30,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	</head>
 <body class="white-bg">
 	<div class="row col-lg-12">
+		<div id="pageTitle" style="text-align: center;">
+			<strong style="text-align: center;font-size: 20px;font-weight: 30px;margin-bottom: 20px;">用户管理</strong>
+		</div>
+		<br/><br/>
 		<div class="col-lg-12">
 <!-- 			<input id="adduser" type="button" value="添加用户" class="btn btn-info btn-outline" /> -->
 			<table  id="usershow" class="table  table-striped table-bordered table-hover dataTable table-condensed">

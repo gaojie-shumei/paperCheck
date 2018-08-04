@@ -25,6 +25,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     </head>
 <body class="white-bg">
 	<div class="row col-lg-12">
+		<div id="pageTitle" style="text-align: center;">
+			<strong style="text-align: center;font-size: 20px;font-weight: 30px;margin-bottom: 20px;">反馈查看</strong>
+		</div>
+		<br/><br/>
 		<table  id="qaresponseshow" class="table  table-striped table-bordered table-hover dataTable table-condensed">
 			<thead>
 				<tr role="row">

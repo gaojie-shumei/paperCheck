@@ -32,7 +32,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	        <div class="tabs-container">
 	          <ul class="nav nav-tabs">
 	            <li class="active"><a data-toggle="tab" href="#tab-1"
-									aria-expanded="flase">修改密码</a></li>
+									aria-expanded="flase">问题反馈</a></li>
 	          </ul>
 	          <div class="tab-content">
 	            <div id="tab-1" class="tab-pane active">
