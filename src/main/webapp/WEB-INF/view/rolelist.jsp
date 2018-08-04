@@ -28,7 +28,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         </style>
 	</head>
 <body class="white-bg">
-	<div class="row col-lg-push-3 col-lg-pull-3 col-lg-12">
+	<div class="row col-lg-12">
 		<div class="col-lg-12">
 			<shiro:hasPermission name="role:add">
 				<input id="addrole" type="button" value="添加角色" class="btn btn-info" />

@@ -63,7 +63,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 </head>
 <body  class="white-bg">
 	<!-- 普通用户查重界面代码 -->
-               		<div id="checkpaper_page" class="col-lg-push-3 col-lg-pull-3 col-lg-12">
+               		<div id="checkpaper_page" class="col-lg-12">
                			<div id="papeTitle" style="text-align: center;">
                				<strong style="text-align: center;font-size: 20px;font-weight: 30px;margin-bottom: 20px;">批量提交文章</strong>
                			</div>

@@ -11,15 +11,15 @@
 }
 
 #head .headCont {
-    width: 1160px!important;
+/*     width: 1160px!important; */
 }
 
 #head .headCont {
     position: relative;
     height: 65px;
     line-height: 65px;
-    width: 1100px;
-    /* width:85%; */
+    /* width: 1100px; */
+    width:85%;
     margin: 0 auto;
     font-size: 16px;
 }
@@ -266,8 +266,8 @@ a {
 
 /*right content*/
 #right_content {
-    width: 1160px;
-    /* width:90%; */
+/*     width: 1160px; */
+    width:90%;
     margin: 28px 30px 0 30px;
     height: 100%;
 }

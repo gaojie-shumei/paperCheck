@@ -32,7 +32,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         </style>
 	</head>
 <body class="white-bg">
-	<div class="wrapper wrapper-content animated fadeInrow col-lg-push-3 col-lg-pull-3 col-lg-12">
+	<div class="wrapper wrapper-content animated fadeInrow col-lg-12">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="panel panel-primary">

@@ -24,7 +24,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         <link rel="stylesheet" type="text/css" href="static/css/datatables.min.css" />
     </head>
 <body class="white-bg">
-	<div class="row col-lg-push-3 col-lg-pull-3 col-lg-12">
+	<div class="row col-lg-12">
 		<table  id="qaresponseshow" class="table  table-striped table-bordered table-hover dataTable table-condensed">
 			<thead>
 				<tr role="row">

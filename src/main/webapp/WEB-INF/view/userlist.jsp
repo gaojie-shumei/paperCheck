@@ -29,7 +29,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         </style>
 	</head>
 <body class="white-bg">
-	<div class="row col-lg-push-3 col-lg-pull-3 col-lg-12">
+	<div class="row col-lg-12">
 		<div class="col-lg-12">
 <!-- 			<input id="adduser" type="button" value="添加用户" class="btn btn-info btn-outline" /> -->
 			<table  id="usershow" class="table  table-striped table-bordered table-hover dataTable table-condensed">

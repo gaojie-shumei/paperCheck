@@ -24,7 +24,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         
     </head>
 <body class="white-bg">
-<div id="page-wrapper" class="col-lg-push-1 col-lg-pull-3 col-lg-12" > 
+<div id="page-wrapper" class="col-lg-12" > 
   <!--中间的主要页面-->
   <div class="wrapper wrapper-content animated fadeIn">
     <div class="row">

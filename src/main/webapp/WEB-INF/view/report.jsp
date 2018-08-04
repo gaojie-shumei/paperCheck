@@ -30,7 +30,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         </style>
 	</head>
 <body class="white-bg">
-	<div class="row col-lg-push-3 col-lg-pull-3 col-lg-12">
+	<div class="row col-lg-12">
 		<table  id="reportshow" class="table  table-striped table-bordered table-hover dataTable table-condensed">
 			<thead>
 				<tr role="row">
