@@ -104,11 +104,28 @@ function registerEvent(){
 
 
 function allremind(){
-	if($("#usercheckremind").css("display")=="none"&& $("#qaresponseremind").css("display")=="none"){
-		$("#allremind").hide();
+	if(permission.search("register:check")!=-1&&permission.search("back:response")!=-1){
+		if($("#usercheckremind").css("display")=="none"&& $("#qaresponseremind").css("display")=="none"){
+			$("#allremind").hide();
+		}else{
+			$("#allremind").show();
+		}
+	}else if(permission.search("back:response")!=-1){
+		if($("#qaresponseremind").css("display")=="none"){
+			$("#allremind").hide();
+		}else{
+			$("#allremind").show();
+		}
+	}else if(permission.search("register:check")!=-1){
+		if($("#usercheckremind").css("display")=="none"){
+			$("#allremind").hide();
+		}else{
+			$("#allremind").show();
+		}
 	}else{
-		$("#allremind").show();
+		$("#allremind").hide();
 	}
+	
 }
 
 function usercheckremind(){
